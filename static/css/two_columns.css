@@ -1,0 +1,29 @@
+div.substance_left
+{
+	background-color:#eeeeee;
+}
+.align-center
+{
+    text-align: center;
+}
+.align-right
+{
+    text-align: right;
+}
+.align-left
+{
+    text-align: right;
+}
+pre
+{
+    border: 0px;
+    background-color: #ffffff
+}
+.font-strong
+{
+    font-weight:bold;
+}
+.red
+{
+    color:red;
+}

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+
+{% block body %}
+
+{% include "_nav_bar.html" %}
+<!-- action参数  alert alert-success  info  warning  danger
+     info参数要显示的信息-->
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>信息类别</th>
+            <th>分类</th>
+            <th>时间</th>
+            <th>物品名称</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in info %}
+        {% ifequal item.info_type "lost" %}
+        <tr class="danger">
+            {% else %}
+        <tr class="warning">
+            {% endifequal %}
+            <td><a href="/lost_and_found/info/{{ item.id }}/">{{ item.id }}</a></td>
+            <td>{{ item.info_type }}</td>
+            <td>{{ item.item_type }}</td>
+            <td><a href="/lost_and_found/info/{{ item.id }}/">{{ item.time }}</a></td>
+            <td><a href="/lost_and_found/info/{{ item.id }}/">{{ item.item_name }}</a></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul class="pager">
+        {% ifequal page_num total_page %}
+            当前第{{ page_num }}页，最后一页
+        {% else %}
+            <li class="next"><a href="/lost_and_found/info_list/{{ next_page }}">Next &rarr;</a></li>
+        {% endifequal %}
+    </ul>
+</div>
+
+{% endblock %}
+

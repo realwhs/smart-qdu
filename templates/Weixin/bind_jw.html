@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block body %}
+{% include "_nav_bar.html" %}
+
+<div class="container">
+    <p>我们对您的账号和密码进行了加密处理，确保安全，请放心使用！</p>
+    <form class="form-login" id="login_form" action="/bind_jw/{{ weixin_id }}/" method='post'>
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="user_name">账号</label>
+            <input type="text" class="form-control input-lg" id='user_name' name='jw_account' maxlength=15
+                   placeholder="教务账号">
+        </div>
+        <div class="form-group">
+            <label for="password">密码</label>
+            <input type="password" class="form-control input-lg" id="password" name="jw_password" maxlength=20
+                   placeholder="教务密码">
+        </div>
+        <button type="submit" class="btn btn-lg btn-primary btn-block col-sm-4" id="login_submit">提交</button>
+    </form>
+</div>
+
+{% endblock %}

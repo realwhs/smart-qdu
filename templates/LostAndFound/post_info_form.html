@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block cssblock %}
+<link rel='stylesheet' href='{{ STATIC_URL }}css/messenger.css'/>
+<link rel='stylesheet' href='{{ STATIC_URL }}css/messenger-theme-flat.css'/>
+{% endblock %}
+{% block javascriptblock %}
+<script src='{{ STATIC_URL }}js/messenger.min.js'></script>
+<script>
+Messenger.options = {
+    extraClasses: 'messenger-fixed messenger-on-bottom messenger-on-right',
+    theme: 'flat'
+}</script>
+<script src="{{ STATIC_URL }}js/post_info.js"></script>
+{% endblock %}
+
+{% block body %}
+
+{% include "_nav_bar.html" %}
+{% include "LostAndFound/_post_info_form.html" %}
+{% endblock %}

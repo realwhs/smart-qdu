@@ -1,0 +1,19 @@
+
+<div class="container col-md-4">
+    <form class="form-login" id="login_form" action="/login/" method='post'>
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="user_name">用户名</label>
+            <input type="text" class="form-control input-lg" id='user_name' name='user_name' maxlength=15
+                   placeholder="请输入用户名">
+        </div>
+        <div class="form-group">
+            <label for="password">密码</label>
+            <input type="password" class="form-control input-lg" id="password" name="password" maxlength=20
+                   placeholder="请输入密码">
+        </div>
+        <button type="submit" class="btn btn-lg btn-primary btn-block col-sm-4" id="login_submit">登录</button>
+
+        <a href="/register/">没有账号？</a> &nbsp;&nbsp;&nbsp;<a href="/forget_password/">忘记密码？</a>
+    </form>
+</div>

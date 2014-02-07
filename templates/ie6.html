@@ -1,0 +1,21 @@
+<!--[if lte IE 6]>
+<div id="ie6-warning">您正在使用 Internet Explorer 6，低版本的IE浏览器已经不受支持，而且存在较大的安全隐患。建议您升级到
+    <a href="http://windows.microsoft.com/zh-cn/windows/upgrade-your-browser" target="_blank">Internet Explorer 8</a>
+    或使用以下浏览器：
+    <a href="http://www.google.cn/intl/zh-CN/chrome/browser/">Chrome</a> /
+    <a href="http://chrome.360.cn/">360急速浏览器</a>
+</div>
+<script type="text/javascript">
+function position_fixed(el, eltop, elleft){
+// check if this is IE6
+if(!window.XMLHttpRequest)
+window.onscroll = function(){
+el.style.top = (document.documentElement.scrollTop + eltop)+"px";
+el.style.left = (document.documentElement.scrollLeft + elleft)+"px";
+}
+else el.style.position = "fixed";
+}
+position_fixed(document.getElementByIdx_xx_x_x("ie6-warning"),0, 0);
+</script>
+<![endif]-->
+<!--这段贴在body里end-->

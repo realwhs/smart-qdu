@@ -1,0 +1,21 @@
+<div class="container">
+
+      <div class="masthead">
+        <h3 class="text-muted">Smart Qdu</h3>
+        <ul class="nav nav-justified">
+          <li><a href="/">主页</a></li>
+          <li><a href="/classroom/">空教室查询</a></li>
+          <li><a href="/lost_and_found/">觅物</a></li>
+          <li><a href="/online_shop/">商城</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li>
+          {% if user.is_authenticated %}
+            <li><a href="/user_profile/">{{ user.user_name }}</a></li>
+          {% else %}
+            <li><a href="/login/">登录</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+        <br/><br/>
+

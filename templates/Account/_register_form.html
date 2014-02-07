@@ -1,0 +1,26 @@
+<div  class="container col-md-offset-4 col-md-4">
+    <form class="form-register" id="register_form" action="/register/" method='POST'>
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="user_name">用户名</label>
+            <input type="text" class="form-control input-lg" id='user_name' name='user_name' maxlength=15
+                   placeholder="请输入用户名">
+        </div>
+        <div class="form-group">
+            <label for="email">邮箱</label>
+            <input type="email" class="form-control input-lg" id='email' name='email' maxlength=15 placeholder="请输入邮箱">
+        </div>
+        <div class="form-group">
+            <label for="password1">密码</label>
+            <input type="password" class="form-control input-lg" id="password1" name="password1" maxlength=20
+                   placeholder="请输入密码">
+        </div>
+        <div class="form-group">
+            <label for="password2">确认密码</label>
+            <input type="password" class="form-control input-lg" id="password2" name="password2" maxlength=20
+                   placeholder="请确认密码">
+        </div>
+        <button type="submit" id="register_submit" class="btn btn-lg btn-primary btn-block col-sm-4">提交</button>
+        <a href="/login/">已有账号？点此登陆</a>
+    </form>
+</div>

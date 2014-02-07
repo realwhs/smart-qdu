@@ -1,0 +1,83 @@
+
+<!-- action参数  alert alert-success  info  warning  danger
+     info参数要显示的信息-->
+<div class="container">
+    {% ifequal info.info_type "lost" %}
+    <div class="panel panel-danger">
+        <div class="panel-heading">丢失信息详情</div>
+        <div class="panel-body">
+            {% if not info.status %}
+            <div class="alert alert-success">注意！这件物品已经被标记为找到！</div>
+            {% endif %}
+            物品类别：{{ info.item_type }}<br/><br/>
+            物品名称：{{ info.item_name }}<br/><br/>
+            时 间：{{ info.time }}<br/><br/>
+            发布时间：{{ info.publish_time }}<br/><br/>
+            说 明：{{ info.content }}<br/><br/>
+            {% if info.image_url %}
+                <img src="{{ info.image_url }}" class="img-responsive" alt="Responsive image">
+            {% endif %}
+            丢失人姓名：{{ info.name }}<br/><br/>
+            {% for item in comment reversed %}
+            <div class="panel panel-info">
+                <div class="panel-heading"><em>{{ item.author }}</em> published at <em>{{ item.publish_time }}</em>
+                </div>
+                <div class="panel-body">
+                    {{ item.content }}
+                </div>
+            </div>
+            {% endfor %}
+            <div class="panel panel-success">
+                <div class="panel-heading"><em>添加评论</em></div>
+                <div class="panel-body">
+                    <form id="post_comment_form" action="/lost_and_found/info/{{ info_id }}/post_comment/" method="post">{% csrf_token %}
+                        <textarea class="form-control" rows="3" name="comment"
+                                ></textarea><br/>
+                        <button type="submit" class="btn btn-lg btn-primary btn-block col-sm-4" id="post_comment_submit"
+                                >提交
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endifequal %}
+    {% ifequal info.info_type "found" %}
+    <div class="panel panel-primary">
+        <div class="panel-heading">拾获信息详情</div>
+        <div class="panel-body">
+            {% if not info.status %}
+            <div class="alert alert-success">注意！这件物品已经被标记为找到失主！</div>
+            {% endif %}
+            物品类别：{{ info.item_type }}<br/><br/>
+            物品名称：{{ info.item_name }}<br/><br/>
+            时 间：{{ info.time }}<br/><br/>
+            发布时间：{{ info.publish_time }}<br/><br/>
+            说 明：{{ info.content }}<br/><br/>
+            拾获人姓名：{{ info.name }}<br/><br/>
+            {% for item in comment reversed %}
+            <div class="panel panel-info">
+                <div class="panel-heading"><em>{{ item.author }}</em> published at <em>{{ item.publish_time }}</em>
+                </div>
+                <div class="panel-body">
+                    {{ item.content }}
+                </div>
+            </div>
+            {% endfor %}
+            <div class="panel panel-success">
+                <div class="panel-heading"><em>添加评论</em></div>
+                <div class="panel-body">
+                    <form id="post_comment_form" action="/lost_and_found/info/{{ info_id }}/post_comment/" method="post">{% csrf_token %}
+                        <textarea class="form-control" rows="3" name="comment"
+                                ></textarea><br/>
+                        <button type="submit" class="btn btn-lg btn-primary btn-block col-sm-4" id="post_comment_submit"
+                                >提交
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endifequal %}
+</div>
+

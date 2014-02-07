@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+
+{% block body %}
+
+{% include "_nav_bar.html" %}
+<div class="container">
+    <div class="panel panel-primary">
+        <div class="panel-heading">个人资料</div>
+        <div class="panel-body">
+            用户名： {{ user.user_name }}<br/>
+            email： {{ user.email }}
+        </div>
+    </div>
+    <div class="panel panel-danger">
+        <div class="panel-heading">操作</div>
+        <div class="panel-body">
+            <button type="button" class="btn btn-primary" onclick="window.location.href='/change_password/'">修改密码
+            </button>
+            <br/><br/>
+            <button type="button" class="btn btn-danger" onclick="window.location.href='/logout/'">退出登录</button>
+        </div>
+    </div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">我发布的觅物信息</div>
+        <div class="panel-body">
+            <ul>
+                {% for item in lost_and_found_info %}
+                <li><a href="/lost_and_found/info/{{ item.id }}/">{{ item.item_name }}</a> published at {{ item.publish_time }}
+                {% if item.status %}
+                    <button type="button" class="btn btn-success btn-sm " onclick="window.location.href='/lost_and_found/info/{{ item.id }}/mark/'">标记为已经找到</button>
+                {% endif %}</li><br/>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

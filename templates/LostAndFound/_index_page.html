@@ -1,0 +1,47 @@
+<div class="container">
+    <div class="panel panel-success">
+        <div class="panel-heading">发布信息之前，请先在信息列表中认真查找！</div>
+        <div class="panel-body">
+            <div>
+                <button type="button" class="btn btn-danger btn-lg" onclick="window.location.href='/lost_and_found/post_info/lost/'">我丢东西了</button>
+                <button type="button" class="btn btn-success btn-lg" onclick="window.location.href='/lost_and_found/post_info/found/'">我捡到东西了</button>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">最新发布</div>
+        <div class="panel-body">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>信息类别</th>
+                    <th>分类</th>
+                    <th>时间</th>
+                    <th>物品名称</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in info %}
+                {% ifequal item.info_type "lost" %}
+                <tr class="danger">
+                    {% else %}
+                <tr class="warning">
+                    {% endifequal %}
+                    <td><a href="/lost_and_found/info/{{ item.id }}/">{{ item.id }}</a></td>
+                    <td>{{ item.info_type }}</td>
+                    <td>{{ item.item_type }}</td>
+                    <td><a href="/lost_and_found/info/{{ item.id }}/">{{ item.time }}</a></td>
+                    <td><a href="/lost_and_found/info/{{ item.id }}/">{{ item.item_name }}</a></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <ul class="pager">
+                <li class="next"><a href="/lost_and_found/info_list/1/">更多 &rarr;</a></li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+

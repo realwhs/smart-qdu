@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+
+{% block body %}
+
+{% include "_nav_bar.html" %}
+
+
+<div class="container">
+    <div class="panel panel-primary">
+        <div class="panel-heading">空教室查询</div>
+        <div class="panel-body">
+
+            <form class="empty_classroom_query" action="/classroom/" method="POST"> {% csrf_token %}
+                <br/><label>请选择第几周</label>
+
+                <div class="week_select">
+                    <select class="form-control" name="week">
+                        {% for item in week_list %}
+                        {% if item == week %}
+                        <option value="{{ item }}" selected="selected"> {{ item }}</option>
+                        {% else %}
+                        <option value="{{ item }}"> {{ item }}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+                <br/><label>请选择教学楼</label>
+
+                <div class="building_select">
+                    <select class="form-control" name="building_name">
+                        {% for item in building_list %}
+                        {% if item == building %}
+                        <option value="{{ item }}" selected="selected"> {{ item }}</option>
+                        {% else %}
+                        <option value="{{ item }}"> {{ item }}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+                <br/><label>请选择星期几</label>
+
+                <div class="day_select">
+                    <select class="form-control" name="day">
+                        {% for item in day_list %}
+                        {% if item == day %}
+                        <option value="{{ item }}" selected="selected"> {{ item }}</option>
+                        {% else %}
+                        <option value="{{ item }}"> {{ item }}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+                <br/><label>请选择第几节课</label>
+
+                <div class="class_select">
+                    <select class="form-control" name="class_order">
+                        {% for item in class_list %}
+                        {% if item == class %}
+                        <option value="{{ item }}" selected="selected"> {{ item }}</option>
+                        {% else %}
+                        <option value="{{ item }}"> {{ item }}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+                <br/>
+
+                <div class="submit_button">
+                    <button class="btn btn-lg btn-primary btn-block" type="submit" value="submit">提交</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

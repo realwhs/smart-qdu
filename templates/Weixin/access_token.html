@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+
+{% block body %}
+
+{% include "_nav_bar.html" %}
+<!-- action参数  alert alert-success  info  warning  danger
+     info参数要显示的信息-->
+<div class="container">
+    <label>帮助</label><br/>
+    <a href="http://mp.weixin.qq.com/wiki/index.php?title=%E8%87%AA%E5%AE%9A%E4%B9%89%E8%8F%9C%E5%8D%95%E5%88%9B%E5%BB%BA%E6%8E%A5%E5%8F%A3" target="_blank">自定义菜单格式</a>
+    <br/><a href="http://mp.weixin.qq.com/debug" target="_blank">自定义菜单管理</a><br/>
+    <label>AccessToken</label>
+    <textarea class="form-control" rows="3" >{{ access_token }}</textarea>
+</div>
+
+{% endblock %}

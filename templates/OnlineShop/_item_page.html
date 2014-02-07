@@ -1,0 +1,76 @@
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">{{ info.classification }}</div>
+        <div class="panel-body">
+            <!--
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <tbody>
+                    <tr>
+                        <td width="50%"><img src="{{ info.preview_pic_url }}" height="350px"></td>
+                        <td width="50%"><h4>{{ info.name }}</h4><br/><br/>
+                            {{ info.simple_introduction }}
+                            <hr>
+                            <strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;商品编号：</strong>{{ info.id }}<br/><br/>
+                            <strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价格：</strong>{{ info.price }}<br/><br/>
+                            <strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;库存：</strong>{{ info.store_num }}<br/><br/>
+
+                            <form class="form-horizontal" role="form" action="/online_shop/item/{{ info.id }}/create_order/" method="post">
+                                {% csrf_token %} <div class="form-group">
+                                    <label class="col-sm-2 control-label">数量</label>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control"  width="30%" placeholder="数量" maxlength="3" name="number" value="1">
+                                    </div>
+                                </div>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="submit" class="btn btn-primary btn-lg">立即购买</button>
+                                </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>-->
+            <div class="row">
+                <div class="col-sm-8 col-md-4">
+                    <div class="thumbnail">
+                        <img src="{{ info.preview_pic_url }}" height="500px">
+
+
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-md-4">
+                    <div class="caption" id="order">
+                        <h4>{{ info.name }}</h4><br/>
+                        {{ info.simple_introduction }}
+                        <hr>
+                        <div id="text">
+                        <p><strong>商品编号：</strong>{{ info.id }}</p>
+                        <p><strong>价格：</strong>{{ info.price }}</p>
+                        <p><strong>库存：</strong>{{ info.store_num }}</p>
+
+                        <form action="/online_shop/item/{{ info.id }}/create_order/" method="post">
+                            {% csrf_token %}
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-addon">购买数量</span>
+                                <input type="text" class="form-control" placeholder="购买数量" maxlength="5"  name="number" value="1">
+                            </div>
+                            <br/>
+                            <button type="submit" class="btn btn-primary btn-lg">立即购买</button>
+                        </form>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">商品介绍</div>
+            <div class="panel-body">
+                {% autoescape off %}
+                {{ info.introduction }}
+                {% endautoescape off %}
+            </div>
+        </div>
+
+
+    </div>
+</div>

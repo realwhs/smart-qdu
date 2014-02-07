@@ -1,0 +1,9 @@
+libraries:
+- name: "django"
+  version: "1.5"
+- name: "lxml"
+  version: "2.3.4"
+- name: "PyCrypto"
+  version: "2.6"
+handle:
+- errordoc: 500 /500/
