@@ -50,4 +50,6 @@ urlpatterns = patterns('',
     url(r'renren/$', 'Renren.views.renren_oauth'),
     url(r'renren_callback/$', 'Renren.views.get_access_token'),
     url(r'renren_test/$', 'Renren.views.post_test'),
+
+    url(r'^vote/(?P<vote_id>\d+)/(?P<weixin_id>.+)/$', 'Vote.views.vote'),
   )

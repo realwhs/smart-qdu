@@ -6,6 +6,7 @@ import urllib2
 from smart_qdu.const import WEIXIN_ID, WEIXIN_NAME
 from AutoReply.models import Keyword, UnrecognizedWord, UnrecognizedWordReply
 from EmptyClassroom.views import query_empty_classroom_weixin
+from Vote.views import vote_reply
 from Weixin.get_score import get_score
 
 
@@ -95,6 +96,9 @@ def auto_reply(to_username, content, msg_type):
                 return text_msg_reply_xml(to_username, result)
             elif re.reply.action == "score":
                 result = get_score(to_username)
+                return text_msg_reply_xml(to_username, result)
+            elif re.reply.action == "vote":
+                result = vote_reply(re.reply.parameter, to_username)
                 return text_msg_reply_xml(to_username, result)
             else:
                 UnrecognizedWord.objects.create(content=content, time=datetime.datetime.now())
