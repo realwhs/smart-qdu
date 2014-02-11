@@ -29,7 +29,7 @@ def vote(request, vote_id, weixin_id, option=None):
         return HttpResponse(json.dumps(response_json))
 
     voter_info = Voter.objects.get(weixin_id=weixin_id, voteinfo__id=vote_id)
-    if voter_info.status is False:
+    if voter_info.vote_status is False:
         response_json = {"status": "error", "content": "您已经投过票了"}
         return HttpResponse(json.dumps(response_json))
     if request.method == "GET":
@@ -46,7 +46,7 @@ def vote(request, vote_id, weixin_id, option=None):
             return HttpResponse(json.dumps(response_json))
         try:
             #判断这个choice是不是这个投票的
-            vote_info = VoteInfo.objects.get(id=vote_id, option__id=int(option_id))
+            VoteInfo.objects.get(id=vote_id, option__id=int(option_id))
         except VoteInfo.DoesNotExist:
             response_json = {"status": "error", "content": "choice不存在"}
             return HttpResponse(json.dumps(response_json))
@@ -54,8 +54,8 @@ def vote(request, vote_id, weixin_id, option=None):
         option = Option.objects.get(id=option_id)
         option.update(num=option.num + 1)
         #标记用户状态
-        voter = Voter.objects.get(weixin_id=weixin_id)
-        voter.update(status=False)
+        #voter = Voter.objects.get(weixin_id=weixin_id)
+        voter_info.update(vote_status=False)
         response_json = {"status": "success", "content": "投票成功"}
         return HttpResponse(json.dumps(response_json))
 

@@ -160,10 +160,10 @@ INSTALLED_APPS = (
     'EmptyClassroom',
     'Weixin',
     'AutoReply',
-    'Statistics',
+    #'Statistics',
     'OnlineShop',
     'Renren',
-    'Vote',
+    #'Vote',
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+
+{% block body %}
+
+{% include "_nav_bar.html" %}
+
+<div class="container">
+<div class="panel panel-primary">
+        <div class="panel-heading">订单商品名称：{{ item_info.name }}</div>
+        <div class="panel-body">
+            <ul>
+                <p>商品名称：<a href="/online_shop/item/{{ item_info.id }}/" target="_blank">{{ item_info.name }}</a></p>
+                <p>数量：{{ order_info.number }}</p>
+                <p>价格：{{ order_info.total_price }}</p>
+                <p>收货人姓名：{{ order_info.address_info.name }}</p>
+                <p>手机：{{ order_info.address_info.phone }}</p>
+                <p>邮箱：{{ order_info.address_info.email }}</p>
+                <p>地址：{{ order_info.address_info.address }}</p>
+                <p>备注：{{ order_info.address_info.remark }}</p>
+                <p>订单状态：{{ order_info.status }}</p>
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -7,6 +7,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.contrib.auth.decorators import login_required
 from Account.forms import RegisterForm, LoginForm, ChangePswForm
+from OnlineShop.models import Order
 from LostAndFound.models import InfoDetail
 
 
@@ -106,7 +107,8 @@ def change_password(request):
 @login_required(login_url="/login/")
 def user_profile(request):
     info = InfoDetail.objects.filter(user_name=request.user.user_name)
-    return render(request, "Account/user_profile.html", {'lost_and_found_info': info})
+    order = Order.objects.filter(user_name=request.user.user_name)
+    return render(request, "Account/user_profile.html", {'lost_and_found_info': info, "order": order})
 
 
 

@@ -7,8 +7,8 @@
           <li><a href="/classroom/">空教室查询</a></li>
           <li><a href="/lost_and_found/">觅物</a></li>
           <li><a href="/online_shop/">商城</a></li>
-          <li><a href="#">About</a></li>
-          <li><a href="#">Contact</a></li>
+          <li><a href="/about/">关于</a></li>
+          <li><a href="/contact/">联系我们</a></li>
           {% if user.is_authenticated %}
             <li><a href="/user_profile/">{{ user.user_name }}</a></li>
           {% else %}

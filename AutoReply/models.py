@@ -5,7 +5,7 @@ from django.db import models
 class Reply(models.Model):
     valid = models.BooleanField("有效？", default=True)
     reply_type_choice = (("text", "text"), ("news", "news"), ("music", "music"), ("action", "action"), )
-    reply_type = models.CharField(max_length=10, choices=reply_type_choice)
+    reply_type = models.CharField("回复类型", max_length=10, choices=reply_type_choice)
     ########################
     #reply_text用于纯文本回复
     reply_text = models.TextField(blank=True)

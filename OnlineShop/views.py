@@ -4,7 +4,7 @@ from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from OnlineShop.forms import ItemNumberForm, OrderForm
-from OnlineShop.models import ItemInfo, Order, AddressInfo
+from OnlineShop.models import ItemInfo, Order, AddressInfo, STATUS_CHOICES
 
 
 def create_order(request, item_id):
@@ -18,7 +18,7 @@ def create_order(request, item_id):
         form = ItemNumberForm(request.POST)
         if form.is_valid():
             number = form.cleaned_data["number"]
-            if number > item.store_num or number < 0:
+            if number > item.store_num or number <= 0:
                 return render(request, "message.html", {"action": "alert alert-info", "info": "购买数量错误"})
             return render(request, "OnlineShop/confirm_order.html", {"info": item,
                                                                      "number": number,
@@ -49,18 +49,27 @@ def submit_order(request, item_id, number):
             email = form.cleaned_data["email"]
             address = form.cleaned_data["address"]
             remark = form.cleaned_data["remark"]
+            #TO DO:
+            #严格的验证手机号码和email
+            if len(phone) != 11:
+                response_json = {"status": "error", "content": "手机号码长度错误"}
+                return HttpResponse(json.dumps(response_json))
             address_info = AddressInfo.objects.create(name=name, phone=phone, email=email, address=address)
             order = Order.objects.create(item_id=item_id, number=number, total_price=int(number) * item.price, user_name=request.user.user_name,
                                          address_info=address_info, remark=remark, status="-1")
             item.store_num -= int(number)
             item.save()
-            response_json = {"status": "success", "redirect": "/online_shop/order/" + str(order.id)}
+            response_json = {"status": "success", "redirect": "/online_shop/order/success/"}
             return HttpResponse(json.dumps(response_json))
         else:
             response_json = {"status": "error", "content": "表单数据错误，请检查所有填写项目！"}
             return HttpResponse(json.dumps(response_json))
     else:
         raise Http404
+
+
+def submit_order_success(request):
+    return render(request, "message.html", {"action": "alert alert-info", "info": "提交订单成功，请等待处理！您可以到个人资料页查看。"})
 
 
 def item_page(request, item_id):
@@ -71,12 +80,16 @@ def item_page(request, item_id):
     return render(request, "OnlineShop/item_page.html", {"info": info})
 
 
+@login_required(login_url="/login/")
 def order_info(request, order_id):
     try:
-        info = Order.objects.get(user_name=request.user.user_name, id=order_id)
+        order_info = Order.objects.get(user_name=request.user.user_name, id=order_id)
     except Order.DoesNotExist:
         raise Http404
-    item_info = ItemInfo.objects.get(id=info.item_id)
+    item_info = ItemInfo.objects.get(id=order_info.item_id)
+    for choice in STATUS_CHOICES:
+        if order_info.status == choice[0]:
+            order_info.status = choice[1]
     return render(request, "OnlineShop/order_info.html", {"order_info": order_info, "item_info": item_info})
 
 

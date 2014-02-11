@@ -34,6 +34,16 @@
             </ul>
         </div>
     </div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">我的订单</div>
+        <div class="panel-body">
+            <ul>
+                {% for item in order %}
+                    订单编号:<a href="/online_shop/order/{{ item.id }}/">{{ item.id }}</a> 创建时间：{{ item.create_time }}<br/>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 </div>
 
 

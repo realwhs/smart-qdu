@@ -8,7 +8,7 @@ class ItemInfoAdmin(admin.ModelAdmin):
 
 
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ("id", )
+    list_display = ("id", "user_name", )
 
 
 admin.site.register(ItemInfo, ItemInfoAdmin)

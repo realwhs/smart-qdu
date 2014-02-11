@@ -8,3 +8,11 @@ def index(request):
 
 def server_error(request):
     return render(request, "500.html")
+
+
+def about(request):
+    return render(request, "About/about_index.html")
+
+
+def contact(request):
+    return render(request, "contact.html")

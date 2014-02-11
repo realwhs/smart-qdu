@@ -42,6 +42,7 @@ urlpatterns = patterns('',
     url(r'^online_shop/item/(?P<item_id>\d+)/submit_order/num/(?P<number>\d+)/$', 'OnlineShop.views.submit_order'),
     url(r'^online_shop/order/(?P<order_id>\d+)/$', 'OnlineShop.views.order_info'),
     url(r'^online_shop/item/(?P<item_id>\d+)/submit_order/num/(?P<number>\d+)/$', 'OnlineShop.views.submit_order'),
+    url(r'^online_shop/order/success/$', 'OnlineShop.views.submit_order_success'),
 
     url(r'^score/$', "Weixin.get_score.get_score"),
     url(r'^bind_jw/(?P<weixin_id>.+)/$', 'Weixin.bind_jw.bind_jw'),
@@ -52,4 +53,7 @@ urlpatterns = patterns('',
     url(r'renren_test/$', 'Renren.views.post_test'),
 
     url(r'^vote/(?P<vote_id>\d+)/(?P<weixin_id>.+)/$', 'Vote.views.vote'),
+
+    url(r'^about/$', 'smart_qdu.views.about'),
+    url('^contact/$', 'smart_qdu.views.contact'),
   )
