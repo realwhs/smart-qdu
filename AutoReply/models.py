@@ -57,4 +57,8 @@ class UnrecognizedWordReply(models.Model):
         return "%s"%self.reply_text
 
 
-
+class UserStatus(models.Model):
+    weixin_id = models.CharField(max_length=50)
+    STATUS_CHOICES = (("wechat_wall", "wechat_wall"), ("simsimi", "simsimi"), )
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES)
+    create_time = models.DateTimeField(auto_now_add=True)

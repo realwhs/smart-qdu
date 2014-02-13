@@ -3,8 +3,9 @@ import datetime
 import time
 import json
 import urllib2
+from django.utils.timezone import utc
 from smart_qdu.const import WEIXIN_ID, WEIXIN_NAME
-from AutoReply.models import Keyword, UnrecognizedWord, UnrecognizedWordReply
+from AutoReply.models import Keyword, UnrecognizedWord, UnrecognizedWordReply, UserStatus
 from EmptyClassroom.views import query_empty_classroom_weixin
 from Vote.views import vote_reply
 from Weixin.get_score import get_score
@@ -76,9 +77,44 @@ def music_reply_xml(to_user_name, title, description, music_url, hq_music_url):
             """ % (to_user_name, WEIXIN_ID, str(int(time.time())), title, description, music_url, hq_music_url)
     return xml
 
+#refer:http://my.oschina.net/yangyanxing/blog/197998
+def chat(ask):
+    ask = ask.encode('UTF-8')
+    enask = urllib2.quote(ask)
+    baseurl = r'http://www.simsimi.com/func/req?msg='
+    url = baseurl+enask+'&lc=ch&ft=0.0'
+    resp = urllib2.urlopen(url)
+    reson = json.loads(resp.read())
+    if reson["msg"] == "OK.":
+        if reson["response"].find(u"微信") == -1:
+            return reson["response"]
+    return "小黄鸡都被你们玩坏了，歇歇吧"
+
+
+def check_user_status(weixin_id, content):
+    try:
+        r = UserStatus.objects.get(weixin_id=weixin_id)
+    except UserStatus.DoesNotExist:
+        return None
+    if r.status == "simsimi":
+        #如果这个用户的状态创建已经超过一个小时或者停止聊天指令   这个状态就会被删除  否则就接入聊天
+        if (datetime.datetime.utcnow().replace(tzinfo=utc) - r.create_time).seconds >= 3600:
+            r.delete()
+        elif content == u"停止聊天":
+            r.delete()
+            return "已经退出聊天状态"
+        else:
+            return chat(content)
+    else:
+        return None
+
 
 def auto_reply(to_username, content, msg_type):
     if msg_type == "text":
+        r = check_user_status(to_username, content)
+        #如果r有返回值  说明聊天中或者其他状态（待开发)  没有的话 就忽略
+        if r:
+            return text_msg_reply_xml(to_username, r)
         try:
             re = Keyword.objects.get(keyword_text=content)
         except Keyword.DoesNotExist:
@@ -100,6 +136,15 @@ def auto_reply(to_username, content, msg_type):
             elif re.reply.action == "vote":
                 result = vote_reply(re.reply.parameter, to_username)
                 return text_msg_reply_xml(to_username, result)
+            elif re.reply.action == "create_chat_status":
+                UserStatus.objects.create(weixin_id=to_username, status="simsimi")
+                return text_msg_reply_xml(to_username, "你已经进入聊天状态了！开始回复吧！")
+            elif re.reply.action == "delete_chat_status":
+                try:
+                    UserStatus.objects.get(weixin_id=to_username)
+                except UserStatus.DoesNotExist:
+                    return text_msg_reply_xml(to_username, "您没有进入聊天状态")
+                return text_msg_reply_xml(to_username, "已经恢复正常状态！")
             else:
                 UnrecognizedWord.objects.create(content=content, time=datetime.datetime.now())
         #如果存在这个关键词 但是不是执行动作 就应该按照设置回复  其中回复分为纯文本回复和图文消息回复

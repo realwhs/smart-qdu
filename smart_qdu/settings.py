@@ -143,6 +143,7 @@ TEMPLATE_DIRS = (
     os.path.join(os.path.dirname(__file__),'../templates/'),
 )
 
+IMAGE_DIR = os.path.join(os.path.dirname(__file__),'../images/')
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',

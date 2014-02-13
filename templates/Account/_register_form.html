@@ -1,5 +1,6 @@
 <div  class="container">
     <form class="form-register" id="register_form" action="/register/" method='POST'>
+        <input type="hidden" name="next" value="{{ next }}">
         {% csrf_token %}
         <div class="form-group">
             <label for="user_name">用户名</label>
@@ -8,7 +9,7 @@
         </div>
         <div class="form-group">
             <label for="email">邮箱</label>
-            <input type="email" class="form-control input-lg" id='email' name='email' maxlength=15 placeholder="请输入邮箱">
+            <input type="email" class="form-control input-lg" id='email' name='email' maxlength=25 placeholder="请输入邮箱">
         </div>
         <div class="form-group">
             <label for="password1">密码</label>

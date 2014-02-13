@@ -1,6 +1,6 @@
-
 <div class="container">
     <form class="form-login" id="login_form" action="/login/" method='post'>
+        <input type="hidden" name="next" value="{{ next }}">
         {% csrf_token %}
         <div class="form-group">
             <label for="user_name">用户名</label>
@@ -14,6 +14,6 @@
         </div>
         <button type="submit" class="btn btn-lg btn-primary btn-block col-sm-4" id="login_submit">登录</button>
 
-        <a href="/register/">没有账号？</a> &nbsp;&nbsp;&nbsp;<a href="/forget_password/">忘记密码？</a>
+        <h4><a href="/register/?next={{ next }}">没有账号？</a> &nbsp;&nbsp;&nbsp;</h4>
     </form>
 </div>

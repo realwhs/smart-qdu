@@ -1,5 +1,6 @@
 #coding:utf-8
 import json
+#from sae.mail import EmailMessage
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
@@ -9,7 +10,7 @@ from OnlineShop.models import ItemInfo, Order, AddressInfo, STATUS_CHOICES
 
 def create_order(request, item_id):
     if not request.user.is_authenticated():
-        return HttpResponseRedirect("/login/")
+        return HttpResponseRedirect("/login/?next=" + request.META.get('HTTP_REFERER', "/"))
     if request.method == "POST":
         try:
             item = ItemInfo.objects.get(id=item_id, status=True)
@@ -27,7 +28,7 @@ def create_order(request, item_id):
             return render(request, "message.html", {"action": "alert alert-info", "info": "请填写数量"})
 
     else:
-        raise Http404
+        return HttpResponseRedirect("/online_shop/item/%s/" % item_id)
 
 
 def submit_order(request, item_id, number):
@@ -59,6 +60,15 @@ def submit_order(request, item_id, number):
                                          address_info=address_info, remark=remark, status="-1")
             item.store_num -= int(number)
             item.save()
+            '''
+            m = EmailMessage()
+            m.to = request.user.email
+            m.subject = "提交订单成功！"
+            m.html = "<p>尊敬的用户，您好！</p>您的订单我们已经收到，正在处理中。\
+            详情请点击<a href='http://smartqdu.sinaapp.com/online_shop/order/%s/'>订单详情</a>。有问题可以直接回复。谢谢</p><p>感谢您的支持！</p>" % order.id
+            m.smtp = ("smtp.sina.cn", 25, "smartqdu@sina.cn", "092122302asdf", False)
+            m.send()
+            '''
             response_json = {"status": "success", "redirect": "/online_shop/order/success/"}
             return HttpResponse(json.dumps(response_json))
         else:
@@ -69,7 +79,8 @@ def submit_order(request, item_id, number):
 
 
 def submit_order_success(request):
-    return render(request, "message.html", {"action": "alert alert-info", "info": "提交订单成功，请等待处理！您可以到个人资料页查看。"})
+    return render(request, "message.html", {"action": "alert alert-info",
+                                            "info": "提交订单成功，请等待处理！您可以到个人资料页查看。"})
 
 
 def item_page(request, item_id):

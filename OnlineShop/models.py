@@ -17,7 +17,7 @@ class ItemInfo(models.Model):
     name = models.CharField(max_length=30)
     simple_introduction = models.CharField(max_length=200)
     price = models.FloatField()
-    preview_pic_url = models.URLField()
+    preview_pic_url = models.URLField(max_length=100)
     model = models.TextField()
     total_num = models.IntegerField()
     store_num = models.IntegerField()

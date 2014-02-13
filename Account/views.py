@@ -32,7 +32,8 @@ def register(request):
                     if password1 == password2:
                         create_user(user_name, email, password1)
                         #注册成功
-                        response_json = {"status": "success", "redirect": "/login/"}
+                        next = request.POST.get("next", "/")
+                        response_json = {"status": "success", "redirect": "/login/?next=" + next}
                         return HttpResponse(json.dumps(response_json))
                     else:
                         response_json = {"status": "error", "content": "密码不匹配！"}
@@ -45,7 +46,8 @@ def register(request):
             response_json = {"status": "error", "content": "表单数据错误！"}
             return HttpResponse(json.dumps(response_json))
     else:
-        return render(request, "Account/register_form.html")
+        next = request.GET.get("next", "/")
+        return render(request, "Account/register_form.html", {"next": next})
 
 
 def log_in(request):
@@ -58,7 +60,10 @@ def log_in(request):
             if user is not None and user.is_active:
                 auth.logout(request)
                 auth.login(request, user)
-                response_json = {"status": "success", "redirect": "/"}
+                next = request.POST.get("next", "/")
+                #if next == "" or "/register/":
+                    #next = "/"
+                response_json = {"status": "success", "redirect": next}
                 return HttpResponse(json.dumps(response_json))
             else:
                 response_json = {"status": "error", "content": "用户名或密码错误"}
@@ -66,8 +71,8 @@ def log_in(request):
         response_json = {"status": "error", "content": "表单数据错误"}
         return HttpResponse(json.dumps(response_json))
     else:
-        #auth.logout(request)
-        return render(request, "Account/login_form.html")
+        next = request.GET.get("next", "/")
+        return render(request, "Account/login_form.html", {"next": next})
 
 
 def logout(request):

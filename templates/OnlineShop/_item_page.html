@@ -45,7 +45,7 @@
                         <hr>
                         <div id="text">
                         <p><strong>商品编号：</strong>{{ info.id }}</p>
-                        <p><strong>价格：</strong>{{ info.price }}</p>
+                        <p><strong>价格：</strong>{{ info.price|floatformat:"2" }}</p>
                         <p><strong>库存：</strong>{{ info.store_num }}</p>
 
                         <form action="/online_shop/item/{{ info.id }}/create_order/" method="post">
