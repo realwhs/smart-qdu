@@ -1,5 +1,6 @@
 smart-qdu
 =========
+http://smartqdu.sinaapp.com
 
 smartqdu是使用django和python开发的。
 
