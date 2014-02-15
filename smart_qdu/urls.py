@@ -53,6 +53,7 @@ urlpatterns = patterns('',
     url(r'^courses/(?P<course_id>\d+)/post_comment/$', 'Courses.views.post_comment'),
     url(r'^courses/search/$', 'Courses.views.search'),
     url(r'^courses/all/(?P<page_num>\d+)/$', 'Courses.views.show_all_courses'),
+    url(r'^courses/import_info/$', 'Courses.views.import_info'),
 
     url(r'^mail/$', 'Mail.views.mail_index'),
     url(r'^mail/send_mail/$', 'Mail.views.send_mail_index'),

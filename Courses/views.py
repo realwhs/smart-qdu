@@ -19,6 +19,7 @@ def courses_index(request):
             tmp_dic["user_name"] = item.user_name
         tmp_dic["course_name"] = info.name
         tmp_dic["course_id"] = info.id
+        tmp_dic["teacher_name"] = info.teacher_name
         tmp_dic["time"] = item.publish_time
         if len(item.content) >= 30:
             tmp_dic["content"] = item.content[0:27] + u"。。。"
@@ -90,3 +91,11 @@ def show_all_courses(request, page_num):
         raise Http404
     return render(request, "Courses/all_courses.html", {"info": page_info.page(page_num), "page_num": str(page_num),
                                                         "total_page": str(total_page), "next_page": str(int(page_num) + 1)})
+
+
+def import_info(request):
+    f = open("class_list.csv", "r")
+    for line in f.readlines():
+        tmp_list = line.decode("GBK").split(",")
+        CourseInfo.objects.create(campus=tmp_list[0], course_id=tmp_list[1], name=tmp_list[2], teacher_name=tmp_list[3], day=int(tmp_list[4]), classroom=tmp_list[5], term=tmp_list[6], status=False)
+    return HttpResponse("success")

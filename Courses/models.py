@@ -20,6 +20,7 @@ class CourseInfo(models.Model):
     course_id = models.CharField(max_length=30)
     teacher_name = models.CharField(max_length=10)
     day = models.SmallIntegerField()
+    term = models.CharField(max_length=10)
     campus = models.CharField(max_length=20)
     classroom = models.CharField(max_length=20)
     comment = models.ManyToManyField(Comment, blank=True)
