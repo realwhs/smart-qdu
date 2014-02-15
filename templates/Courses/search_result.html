@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+
+{% block body %}
+
+{% include "_nav_bar.html" %}
+
+<div class="container">
+
+{% if number %}
+    <h4>找到{{ number }}条搜索结果</h4>
+{% else %}
+    <h4>没有找到相关的课程，要不在<a href="/courses/all/1/">课程列表</a>里面找找看吧！</h4>
+{% endif %}
+
+<ul>
+    {% for item in result %}
+        <li><a href="/courses/{{ item.id }}/" target="_blank">{{ item.name }} -- {{ item.teacher_name }}</a></li>
+    {% endfor %}
+</ul>
+</div>
+
+{% endblock %}

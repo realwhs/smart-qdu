@@ -1,0 +1,75 @@
+<!-- action参数  alert alert-success  info  warning  danger
+     info参数要显示的信息-->
+<div class="container">
+    <div class="panel panel-primary">
+        <div class="panel-heading">课程详情 -- {{ info.name }}</div>
+        <div class="panel-body">
+            {% if not info.status %}
+            <div class="alert alert-success">注意！这个课程已经结束！</div>
+            {% endif %}
+            <div class="well">
+                <ul>
+            <li>课程名称：{{ info.name }}</li><br/>
+
+            <li>课程编号：{{ info.course_id }}</li><br/>
+
+            <li>老师姓名：{{ info.teacher_name }}</li><br/>
+
+            <li>校区：{{ info.campus }}</li><br/>
+
+            <li>教室：{{ info.classroom }}</li><br/>
+
+            <li>时间：{{ info.day }}</li><br/>
+                    </ul>
+                </div>
+            {% for item in comment reversed %}
+            <div class="panel panel-info">
+                {% if item.is_anonymous %}
+                <div class="panel-heading"><em> 匿名用户 </em> 发表于 <em>{{ item.publish_time }}</em></div>
+                {% else %}
+                <div class="panel-heading"><em><a href="/mail/send_mail/?to_user={{ item.user_name }}">{{ item.user_name }}</a></em> 发表于 <em>{{ item.publish_time }}</em>
+                </div>
+                {% endif %}
+                <div class="panel-body">
+                    <p>评分：<span class="badge">{{ item.score }}</span></p>
+                    {{ item.content }}
+                </div>
+            </div>
+            {% endfor %}
+            <div class="panel panel-success">
+                <div class="panel-heading"><em>添加评论</em></div>
+                <div class="panel-body">
+                    <form id="post_comment_form" action="/courses/{{ info.id }}/post_comment/" method="post">{%csrf_token %}
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" value="1" name="is_anonymous">
+                                匿名提交
+                            </label>
+                        </div>
+                        评价：
+                        <label class="radio-inline">
+                            <input type="radio" value="1" name="score"> 1
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" value="2" name="score"> 2
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" value="3" name="score"> 3
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" value="4" name="score"> 4
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" value="5" name="score"> 5
+                        </label>
+                        <textarea class="form-control" rows="3" name="comment" placeholder="这门课点名的频率，考试的形式，作业，还有你对这门课的看法评价都也可写下来。请客观公正的评价，不要恶意攻击老师哦"></textarea><br/>
+                        <button type="submit" class="btn btn-lg btn-primary btn-block col-sm-4"
+                                id="post_comment_submit">提交
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

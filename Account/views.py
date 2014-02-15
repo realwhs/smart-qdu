@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from Account.forms import RegisterForm, LoginForm, ChangePswForm
 from OnlineShop.models import Order
 from LostAndFound.models import InfoDetail
+from Mail.models import Mail
 
 
 def create_user(user_name, email, password):
@@ -76,6 +77,7 @@ def log_in(request):
 
 
 def logout(request):
+    del request.session["new_message"]
     auth.logout(request)
     return render(request, "message.html", {"action": "alert alert-info", "info": "已经退出登录"})
 
@@ -111,9 +113,14 @@ def change_password(request):
 
 @login_required(login_url="/login/")
 def user_profile(request):
+    mail = Mail.objects.filter(to_user=request.user.user_name, status=False)
+    if len(mail):
+        new_message = True
+    else:
+        new_message = False
     info = InfoDetail.objects.filter(user_name=request.user.user_name)
     order = Order.objects.filter(user_name=request.user.user_name)
-    return render(request, "Account/user_profile.html", {'lost_and_found_info': info, "order": order})
+    return render(request, "Account/user_profile.html", {'lost_and_found_info': info, "order": order, "new_message": new_message})
 
 
 

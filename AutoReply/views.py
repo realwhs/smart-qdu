@@ -83,7 +83,10 @@ def chat(ask):
     enask = urllib2.quote(ask)
     baseurl = r'http://www.simsimi.com/func/req?msg='
     url = baseurl+enask+'&lc=ch&ft=0.0'
-    resp = urllib2.urlopen(url)
+    try:
+        resp = urllib2.urlopen(url)
+    except urllib2.HTTPError:
+        return "小黄鸡都被你们玩坏了，歇歇吧"
     reson = json.loads(resp.read())
     if reson["msg"] == "OK.":
         if reson["response"].find(u"微信") == -1:
@@ -98,7 +101,7 @@ def check_user_status(weixin_id, content):
         return None
     if r.status == "simsimi":
         #如果这个用户的状态创建已经超过一个小时或者停止聊天指令   这个状态就会被删除  否则就接入聊天
-        if (datetime.datetime.utcnow().replace(tzinfo=utc) - r.create_time).seconds >= 3600:
+        if (datetime.datetime.utcnow().replace(tzinfo=utc) - r.create_time).seconds >= 1800:
             r.delete()
         elif content == u"停止聊天":
             r.delete()
@@ -138,7 +141,7 @@ def auto_reply(to_username, content, msg_type):
                 return text_msg_reply_xml(to_username, result)
             elif re.reply.action == "create_chat_status":
                 UserStatus.objects.create(weixin_id=to_username, status="simsimi")
-                return text_msg_reply_xml(to_username, "你已经进入聊天状态了！开始回复吧！")
+                return text_msg_reply_xml(to_username, "你已经进入聊天状态了！开始吧！回复“停止聊天”即可退出")
             elif re.reply.action == "delete_chat_status":
                 try:
                     UserStatus.objects.get(weixin_id=to_username)

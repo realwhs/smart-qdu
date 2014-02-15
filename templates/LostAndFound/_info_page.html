@@ -20,7 +20,7 @@
             丢失人姓名：{{ info.name }}<br/><br/>
             {% for item in comment reversed %}
             <div class="panel panel-info">
-                <div class="panel-heading"><em>{{ item.author }}</em> published at <em>{{ item.publish_time }}</em>
+                <div class="panel-heading"><em><a href="/mail/send_mail/?to_user={{ item.author }}">{{ item.author }}</a></em> published at <em>{{ item.publish_time }}</em>
                 </div>
                 <div class="panel-body">
                     {{ item.content }}
@@ -57,7 +57,7 @@
             拾获人姓名：{{ info.name }}<br/><br/>
             {% for item in comment reversed %}
             <div class="panel panel-info">
-                <div class="panel-heading"><em>{{ item.author }}</em> published at <em>{{ item.publish_time }}</em>
+                <div class="panel-heading"><em><a href="/mail/send_mail/?to_user={{ item.author }}">{{ item.author }}</a></em> published at <em>{{ item.publish_time }}</em>
                 </div>
                 <div class="panel-body">
                     {{ item.content }}

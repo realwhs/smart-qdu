@@ -48,6 +48,18 @@ urlpatterns = patterns('',
     url(r'^online_shop/item/(?P<item_id>\d+)/submit_order/num/(?P<number>\d+)/$', 'OnlineShop.views.submit_order'),
     url(r'^online_shop/order/success/$', 'OnlineShop.views.submit_order_success'),
 
+    url(r'^courses/$', 'Courses.views.courses_index'),
+    url(r'^courses/(?P<course_id>\d+)/$', 'Courses.views.course_info'),
+    url(r'^courses/(?P<course_id>\d+)/post_comment/$', 'Courses.views.post_comment'),
+    url(r'^courses/search/$', 'Courses.views.search'),
+    url(r'^courses/all/(?P<page_num>\d+)/$', 'Courses.views.show_all_courses'),
+
+    url(r'^mail/$', 'Mail.views.mail_index'),
+    url(r'^mail/send_mail/$', 'Mail.views.send_mail_index'),
+    url(r'^mail/send_mail_operation/$', 'Mail.views.send_mail'),
+    url('^mail/read_mail/(?P<mail_id>\d+)/$', 'Mail.views.read_mail'),
+    url(r'mail/get_status/$', 'Mail.views.get_mail_status'),
+
     url(r'^score/$', "Weixin.get_score.get_score"),
     url(r'^bind_jw/(?P<weixin_id>.+)/$', 'Weixin.bind_jw.bind_jw'),
     url(r'^unbind_jw/(?P<weixin_id>.+)/$', 'Weixin.bind_jw.unbind_jw'),

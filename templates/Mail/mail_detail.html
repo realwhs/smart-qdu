@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+
+{% block body %}
+
+{% include "_nav_bar.html" %}
+
+<div class="container">
+{% ifequal type "sent" %}
+    <p>收件人：{{ info.to_user }}</p>
+    <p>时间：{{ info.create_time }}</p>
+    <p>主题：{{ info.subject }}</p>
+    <p>正文：{{ info.content }}</p>
+{% else %}
+    <p>发件人：{{ info.from_user }}</p>
+    <p>时间：{{ info.create_time }}</p>
+    <p>主题：{{ info.subject }}</p>
+    <p>正文：{{ info.content }}</p>
+    <p><button type="button" class="btn btn-success btn-sm " onclick="window.location.href='/mail/send_mail/?to_user={{ info.from_user }}&&reply=' + 'reply:' + '{{ info.subject }}'">回复</button></p>
+{% endifequal %}
+</div>
+
+{% endblock %}

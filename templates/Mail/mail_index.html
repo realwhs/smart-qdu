@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+
+{% block body %}
+
+{% include "_nav_bar.html" %}
+
+<div class="container">
+
+    <div class="panel panel-default">
+
+        <div class="panel-heading">我收到的消息</div>
+
+        <ul class="list-group">
+            {% for item in received %}
+                {% if item.status %}
+                      <li class="list-group-item"><a href="/mail/read_mail/{{ item.id }}/">{{ item.create_time }} -- {{ item.from_user }} -- {{ item.subject}}</a></li>
+                {% else %}
+                       <li class="list-group-item"><a href="/mail/read_mail/{{ item.id }}/">【未读】{{ item.create_time }} -- {{ item.from_user }} -- {{ item.subject}}</a></li>
+                {% endif %}
+            {% endfor %}
+
+        </ul>
+    </div>
+    <br/><br/>
+      <div class="panel panel-default">
+
+        <div class="panel-heading">我发送的消息</div>
+
+        <ul class="list-group">
+            {% for item in sent  %}
+            <li class="list-group-item"><a href="/mail/read_mail/{{ item.id }}/">{{ item.create_time }} -- {{ item.to_user }} -- {{ item.subject}}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+{% endblock %}

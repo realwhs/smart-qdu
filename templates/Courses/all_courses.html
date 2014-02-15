@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+
+{% block body %}
+
+{% include "_nav_bar.html" %}
+
+<div class="container">
+ <div class="list-group">
+        {% for item in info %}
+        <a href="/courses/{{ item.id }}/" class="list-group-item" target="_blank"><code>{{ item.name }}</code> -- {{ item.teacher_name }}</a>
+        {% endfor %}
+    </div>
+    <ul class="pager">
+        {% ifequal page_num total_page %}
+            当前第{{ page_num }}页，最后一页
+        {% else %}
+            <li class="next"><a href="/lost_and_found/info_list/{{ next_page }}">Next &rarr;</a></li>
+        {% endifequal %}
+    </ul>
+</div>
+
+{% endblock %}

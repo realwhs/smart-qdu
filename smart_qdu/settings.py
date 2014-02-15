@@ -165,6 +165,8 @@ INSTALLED_APPS = (
     'OnlineShop',
     'Renren',
     #'Vote',
+    'Courses',
+    'Mail',
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'

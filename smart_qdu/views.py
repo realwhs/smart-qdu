@@ -1,5 +1,6 @@
 #coding:utf-8
 from django.shortcuts import render
+from Mail.models import Mail
 
 
 def index(request):

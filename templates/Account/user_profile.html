@@ -22,6 +22,17 @@
         </div>
     </div>
     <div class="panel panel-primary">
+        <div class="panel-heading">站内信</div>
+        <div class="panel-body">
+            {% if new_message %}
+                <div class= "alert alert-warning" >你有未读邮件！<a href="/mail/">点击查看</a> </div>
+            {% endif %}
+            <button type="button" class="btn btn-primary" onclick="window.location.href='/mail/send_mail/'">写信</button>
+            <br/><br/>
+            <button type="button" class="btn btn-primary" onclick="window.location.href='/mail/'">邮件列表</button>
+        </div>
+    </div>
+    <div class="panel panel-primary">
         <div class="panel-heading">我发布的觅物信息</div>
         <div class="panel-body">
             <ul>
