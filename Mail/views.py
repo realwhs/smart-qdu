@@ -20,7 +20,7 @@ def send_mail(request):
             content = form.cleaned_data["content"]
             try:
                 Passport.objects.get(user_name=to_user)
-            except Passport.DoseNotExist:
+            except Passport.DoesNotExist:
                 response_json = {"status": "error", "content": "收件人账号不存在！"}
                 return HttpResponse(json.dumps(response_json))
             Mail.objects.create(to_user=to_user, from_user=request.user.user_name, subject=subject, content=content)
