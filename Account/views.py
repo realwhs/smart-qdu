@@ -77,7 +77,6 @@ def log_in(request):
 
 
 def logout(request):
-    del request.session["new_message"]
     auth.logout(request)
     return render(request, "message.html", {"action": "alert alert-info", "info": "已经退出登录"})
 
