@@ -1,41 +1,22 @@
 <div class="container">
-    <div class="panel panel-default">
+    <div class="panel panel-info">
         <div class="panel-heading">{{ info.classification }}</div>
         <div class="panel-body">
-            <!--
-            <div class="table-responsive">
-                <table class="table table-bordered">
-                    <tbody>
-                    <tr>
-                        <td width="50%"><img src="{{ info.preview_pic_url }}" height="350px"></td>
-                        <td width="50%"><h4>{{ info.name }}</h4><br/><br/>
-                            {{ info.simple_introduction }}
-                            <hr>
-                            <strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;商品编号：</strong>{{ info.id }}<br/><br/>
-                            <strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价格：</strong>{{ info.price }}<br/><br/>
-                            <strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;库存：</strong>{{ info.store_num }}<br/><br/>
 
-                            <form class="form-horizontal" role="form" action="/online_shop/item/{{ info.id }}/create_order/" method="post">
-                                {% csrf_token %} <div class="form-group">
-                                    <label class="col-sm-2 control-label">数量</label>
-                                    <div class="col-sm-3">
-                                        <input type="text" class="form-control"  width="30%" placeholder="数量" maxlength="3" name="number" value="1">
-                                    </div>
-                                </div>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="submit" class="btn btn-primary btn-lg">立即购买</button>
-                                </form>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>-->
             <div class="row">
                 <div class="col-sm-8 col-md-4">
                     <div class="thumbnail">
                         <img src="{{ info.preview_pic_url }}">
 
-
                     </div>
+                    <div class="bdsharebuttonbox" data-tag="share_1">
+
+	<a class="bds_qzone" data-cmd="qzone" href="#"></a>
+	<a class="bds_renren" data-cmd="renren"></a>
+	<a class="bds_tsina" data-cmd="tsina"></a>
+	<a class="bds_tqq" data-cmd="tqq"></a>
+	<a class="bds_weixin" data-cmd="weixin"></a>
+</div>
                 </div>
 
                 <div class="col-sm-6 col-md-4">
@@ -62,7 +43,7 @@
                 </div>
             </div>
         </div>
-        <div class="panel panel-default">
+        <div class="panel panel-info">
             <div class="panel-heading">商品介绍</div>
             <div class="panel-body">
                 {% autoescape off %}
@@ -73,4 +54,16 @@
 
 
     </div>
+    <script>
+	window._bd_share_config = {
+		common : {
+			bdText : 'SmartQdu - 提供校园文化产品，自习室查询，觅物，选修课评价等校园服务。',
+			bdDesc : '我刚刚看了{{ info.name }},觉得不错，大家也去看看吧！',
+		},
+		share : [{
+			"bdSize" : 32
+		}],
+	}
+	with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
 </div>

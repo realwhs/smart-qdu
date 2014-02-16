@@ -7,3 +7,10 @@ libraries:
   version: "2.6"
 handle:
 - errordoc: 500 /500/
+- expire: if( path ~ "*.js" ) time 3600
+- expire: if( path ~ "*.css" ) time 3600
+- expire: if( path ~ "*.jpg" ) time 3600
+- compress:  if ( out_header["Content-type"] ~ "text/css" ) compress
+- compress:  if ( out_header["Content-type"] ~ "text/javascript" ) compress
+- compress:  if ( out_header["Content-type"] ~ "text/html" ) compress
+- compress:  if ( out_header["Content-type"] ~ "image/jpeg" ) compress

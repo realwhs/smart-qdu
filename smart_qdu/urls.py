@@ -47,6 +47,7 @@ urlpatterns = patterns('',
     url(r'^online_shop/order/(?P<order_id>\d+)/$', 'OnlineShop.views.order_info'),
     url(r'^online_shop/item/(?P<item_id>\d+)/submit_order/num/(?P<number>\d+)/$', 'OnlineShop.views.submit_order'),
     url(r'^online_shop/order/success/$', 'OnlineShop.views.submit_order_success'),
+    url(r'^online_shop/order_management/$', 'OnlineShop.views.order_management'),
 
     url(r'^courses/$', 'Courses.views.courses_index'),
     url(r'^courses/(?P<course_id>\d+)/$', 'Courses.views.course_info'),

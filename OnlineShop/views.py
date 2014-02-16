@@ -56,7 +56,8 @@ def submit_order(request, item_id, number):
                 response_json = {"status": "error", "content": "手机号码长度错误"}
                 return HttpResponse(json.dumps(response_json))
             address_info = AddressInfo.objects.create(name=name, phone=phone, email=email, address=address)
-            order = Order.objects.create(item_id=item_id, number=number, total_price=int(number) * item.price, user_name=request.user.user_name,
+            order = Order.objects.create(item_id=item_id, number=number, total_price=int(number) * item.price,
+                                         user_name=request.user.user_name,
                                          address_info=address_info, remark=remark, status="-1")
             item.store_num -= int(number)
             item.save()
@@ -93,10 +94,16 @@ def item_page(request, item_id):
 
 @login_required(login_url="/login/")
 def order_info(request, order_id):
-    try:
-        order_info = Order.objects.get(user_name=request.user.user_name, id=order_id)
-    except Order.DoesNotExist:
-        raise Http404
+    if request.user.is_staff is True:
+        try:
+            order_info = Order.objects.get(id=order_id)
+        except Order.DoesNotExist:
+            raise Http404
+    else:
+        try:
+            order_info = Order.objects.get(user_name=request.user.user_name, id=order_id)
+        except Order.DoesNotExist:
+            raise Http404
     item_info = ItemInfo.objects.get(id=order_info.item_id)
     for choice in STATUS_CHOICES:
         if order_info.status == choice[0]:
@@ -107,41 +114,23 @@ def order_info(request, order_id):
 def shop_index(request):
     return render(request, "OnlineShop/shop_index.html")
 
-'''
-@login_required(login_url="/login/")
-def get_order(request):
-    order = Order.objects.filter(user_name=request.user.user_name)
-    return order
-
 
 @login_required(login_url="/login/")
-def order_management_index(request, status="all"):
-    if not request.user.is_staff():
-        return HttpResponse("权限错误")
-    if status == "all":
-        order = Order.objects.all()
-        return order
+def order_management(request):
+    if request.user.is_staff is True:
+        order_info = Order.objects.all()
+        order_list = []
+        for item in order_info:
+            order = {}
+            item_info = ItemInfo.objects.get(id=item.item_id)
+            for choice in STATUS_CHOICES:
+                if item.status == choice[0]:
+                    item.status = choice[1]
+            order["item_name"] = item_info.name
+            order['order_info'] = item
+            order_list.append(order)
+        return render(request, "OnlineShop/order_management.html", {"order": order_list})
     else:
-        if not(status == "-1" or status == "0" or status == "1" or status == "2"):
-            return HttpResponse("order status error")
-        order = Order.objects.filter(status=status)
-        return order
-
-
-@login_required(login_url="/login/")
-def order_status_management(request, order_id, status):
-    try:
-        order = Order.objects.get(id=int(order_id))
-    except Order.DoesNotExist:
         raise Http404
-    if not(status == "-1" or status == "0" or status == "1" or status == "2"):
-        return HttpResponse("order status error")
-    order.status = status
-    order.save()
-    ####################
-    return HttpResponseRedirect("")
-
-'''
-
 
 

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+
+{% block body %}
+
+{% include "_nav_bar.html" %}
+
+<div class="container">
+    <h3>订单管理</h3>
+<ul class="list-group">
+    {% for item in order reversed %}
+    <li class="list-group-item"><a href="/online_shop/order/{{ item.order_info.id }}/" target="_blank">
+        【{{ item.order_info.id }}】 -- {{ item.item_name }} -- {{ item.order_info.number }} -- {{ item.order_info.total_price }} --
+        {{ item.order_info.user_name }} -- {{ item.order_info.address_info.name }} -- {{ item.order_info.address_info.phone }} --
+        {{ item.order_info.address_info.address }} -- 【{{ item.order_info.status }}】</a>
+        <button type="button" class="btn btn-info btn-sm" onclick="window.location.href='/admin/OnlineShop/order/{{ item.order_info.id }}/'">管理</button>
+    </li>
+    {% endfor %}
+</ul>
+</div>
+
+
+{% endblock %}

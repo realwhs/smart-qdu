@@ -7,7 +7,8 @@
             {% if not info.status %}
             <div class="alert alert-success">注意！这个课程已经结束！</div>
             {% endif %}
-            <div class="well">
+            <div class="panel panel-default">
+                <div class="panel-body">
                 <ul>
             <li>课程名称：{{ info.name }}</li><br/>
 
@@ -24,12 +25,13 @@
             <li>时间：{{ info.day }}</li><br/>
                     </ul>
                 </div>
+                </div>
             {% for item in comment reversed %}
             <div class="panel panel-info">
                 {% if item.is_anonymous %}
                 <div class="panel-heading"><em> 匿名用户 </em> 发表于 <em>{{ item.publish_time }}</em></div>
                 {% else %}
-                <div class="panel-heading"><em><a href="/mail/send_mail/?to_user={{ item.user_name }}">{{ item.user_name }}</a></em> 发表于 <em>{{ item.publish_time }}</em>
+                <div class="panel-heading"><em><a href="/mail/send_mail/?to_user={{ item.user_name }}"><code>{{ item.user_name }}</code></a></em> 发表于 <em>{{ item.publish_time }}</em>
                 </div>
                 {% endif %}
                 <div class="panel-body">
@@ -64,7 +66,7 @@
                         <label class="radio-inline">
                             <input type="radio" value="5" name="score"> 5
                         </label>
-                        <textarea class="form-control" rows="3" name="comment" placeholder="这门课点名的频率，考试的形式，作业，还有你对这门课的看法评价都也可写下来。请客观公正的评价，不要恶意攻击老师哦"></textarea><br/>
+                        <textarea class="form-control" rows="4" name="comment" placeholder="这门课点名的频率，考试的形式，作业，还有你对这门课的看法评价都也可写下来。请客观公正的评价，不要恶意攻击老师哦"></textarea><br/>
                         <button type="submit" class="btn btn-lg btn-primary btn-block col-sm-4"
                                 id="post_comment_submit">提交
                         </button>

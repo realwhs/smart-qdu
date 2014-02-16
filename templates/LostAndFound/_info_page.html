@@ -18,9 +18,10 @@
                 <img src="{{ info.image_url }}" class="img-responsive" alt="Responsive image">
             {% endif %}
             丢失人姓名：{{ info.name }}<br/><br/>
+
             {% for item in comment reversed %}
             <div class="panel panel-info">
-                <div class="panel-heading"><em><a href="/mail/send_mail/?to_user={{ item.author }}">{{ item.author }}</a></em> published at <em>{{ item.publish_time }}</em>
+                <div class="panel-heading"><a href="/mail/send_mail/?to_user={{ item.author }}"><code>{{ item.author }}</code></a> published at <em>{{ item.publish_time }}</em>
                 </div>
                 <div class="panel-body">
                     {{ item.content }}
@@ -55,9 +56,10 @@
             发布时间：{{ info.publish_time }}<br/><br/>
             说 明：{{ info.content }}<br/><br/>
             拾获人姓名：{{ info.name }}<br/><br/>
+
             {% for item in comment reversed %}
             <div class="panel panel-info">
-                <div class="panel-heading"><em><a href="/mail/send_mail/?to_user={{ item.author }}">{{ item.author }}</a></em> published at <em>{{ item.publish_time }}</em>
+                <div class="panel-heading"><a href="/mail/send_mail/?to_user={{ item.author }}"><code>{{ item.author }}</code></a> published at <em>{{ item.publish_time }}</em>
                 </div>
                 <div class="panel-body">
                     {{ item.content }}

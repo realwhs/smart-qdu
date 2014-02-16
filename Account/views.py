@@ -22,7 +22,9 @@ def register(request):
         if form.is_valid():
             user_name = form.cleaned_data["user_name"]
             password1 = form.cleaned_data["password1"]
-            password2 = form.cleaned_data["password2"]
+            #password2 = form.cleaned_data["password2"]
+            #注意  这个地方是简化注册步骤  只输入一个密码即可  兼容以前的设计
+            password2 = password1
             email = form.cleaned_data["email"]
             try:
                 Passport.objects.get(user_name=user_name)
@@ -32,9 +34,14 @@ def register(request):
                 except Passport.DoesNotExist:
                     if password1 == password2:
                         create_user(user_name, email, password1)
-                        #注册成功
+                        #注册成功自动登陆
+                        user = auth.authenticate(username=user_name, password=password1)
+                        if user is not None and user.is_active:
+                            auth.logout(request)
+                            auth.login(request, user)
+                        #跳转
                         next = request.POST.get("next", "/")
-                        response_json = {"status": "success", "redirect": "/login/?next=" + next}
+                        response_json = {"status": "success", "redirect": next}
                         return HttpResponse(json.dumps(response_json))
                     else:
                         response_json = {"status": "error", "content": "密码不匹配！"}

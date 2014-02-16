@@ -20,7 +20,7 @@
 
     <div class="list-group">
         {% for item in comment_list %}
-        <a href="/courses/{{ item.course_id }}/" class="list-group-item">&nbsp;&nbsp;{{ item.user_name }}&nbsp;于&nbsp;{{item.time }}&nbsp;发表了对课程<code>{{ item.course_name }} -- {{ item.teacher_name }}</code>的评论:{{ item.content }}</a>
+        <a href="/courses/{{ item.course_id }}/" class="list-group-item">&nbsp;&nbsp;<code>{{ item.user_name }}</code>&nbsp;于&nbsp;{{item.time }}&nbsp;发表了对课程<code>{{ item.course_name }}</code> -- <code>{{ item.teacher_name }}</code>的评论:{{ item.content }}</a>
         {% endfor %}
     </div>
 
