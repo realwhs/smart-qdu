@@ -3,6 +3,7 @@ import json
 #from sae.mail import EmailMessage
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render
+from Mail.models import Mail
 from django.contrib.auth.decorators import login_required
 from OnlineShop.forms import ItemNumberForm, OrderForm
 from OnlineShop.models import ItemInfo, Order, AddressInfo, STATUS_CHOICES
@@ -21,9 +22,18 @@ def create_order(request, item_id):
             number = form.cleaned_data["number"]
             if number > item.store_num or number <= 0:
                 return render(request, "message.html", {"action": "alert alert-info", "info": "购买数量错误"})
+            history_order = Order.objects.filter(user_name=request.user.user_name).order_by("-create_time")
+            name = phone = address = ""
+            if len(history_order):
+                name = history_order[0].address_info.name
+                phone = history_order[0].address_info.phone
+                address = history_order[0].address_info.address
             return render(request, "OnlineShop/confirm_order.html", {"info": item,
                                                                      "number": number,
-                                                                     "price": item.price * number})
+                                                                     "price": item.price * number,
+                                                                     "name": name,
+                                                                     "phone":phone,
+                                                                     "address": address})
         else:
             return render(request, "message.html", {"action": "alert alert-info", "info": "请填写数量"})
 
@@ -70,6 +80,9 @@ def submit_order(request, item_id, number):
             m.smtp = ("smtp.sina.cn", 25, "smartqdu@sina.cn", "092122302asdf", False)
             m.send()
             '''
+            content = "您好！您的订单我们已经收到，正在处理中。\
+            详情请点击http://smartqdu.sinaapp.com/online_shop/order/%s/。开学后，我们会联系您。有问题可以直接回复。感谢您的支持！" % order.id
+            Mail.objects.create(to_user=request.user.user_name, from_user="root", subject="您的订单提交成功", content=content)
             response_json = {"status": "success", "redirect": "/online_shop/order/success/"}
             return HttpResponse(json.dumps(response_json))
         else:
@@ -89,7 +102,13 @@ def item_page(request, item_id):
         info = ItemInfo.objects.get(id=item_id)
     except ItemInfo.DoesNotExist:
         raise Http404
-    return render(request, "OnlineShop/item_page.html", {"info": info})
+    if int(item_id) == 2:
+        origin_price = 5
+        number = 500
+    if int(item_id) == 3:
+        origin_price = 8
+        number = 200
+    return render(request, "OnlineShop/item_page.html", {"info": info, "origin_price": origin_price, "number": number})
 
 
 @login_required(login_url="/login/")
@@ -118,7 +137,7 @@ def shop_index(request):
 @login_required(login_url="/login/")
 def order_management(request):
     if request.user.is_staff is True:
-        order_info = Order.objects.all()
+        order_info = Order.objects.order_by("create_time")
         order_list = []
         for item in order_info:
             order = {}

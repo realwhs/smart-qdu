@@ -26,13 +26,14 @@
                         <hr>
                         <div id="text">
                         <p><strong>商品编号：</strong>{{ info.id }}</p>
-                        <p><strong>价格：</strong>{{ info.price|floatformat:"2" }}</p>
+                        <p><strong>价格：</strong><span style="font-size:130%;color:red">￥{{ info.price|floatformat:"2" }}</span> &nbsp;&nbsp;<del>原价{{ origin_price }}元</del></p>
+                        <p><strong>限量发售：</strong>{{ number }}件</p>
                         <p><strong>库存：</strong>{{ info.store_num }}</p>
 
                         <form action="/online_shop/item/{{ info.id }}/create_order/" method="post">
                             {% csrf_token %}
                             <div class="input-group input-group-sm">
-                                <span class="input-group-addon">购买数量</span>
+                                <span class="input-group-addon">数量</span>
                                 <input type="text" class="form-control" placeholder="购买数量" maxlength="5"  name="number" value="1">
                             </div>
                             <br/>

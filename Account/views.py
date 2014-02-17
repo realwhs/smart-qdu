@@ -125,7 +125,7 @@ def user_profile(request):
     else:
         new_message = False
     info = InfoDetail.objects.filter(user_name=request.user.user_name)
-    order = Order.objects.filter(user_name=request.user.user_name)
+    order = Order.objects.filter(user_name=request.user.user_name).order_by("-create_time")
     return render(request, "Account/user_profile.html", {'lost_and_found_info': info, "order": order, "new_message": new_message})
 
 

@@ -74,4 +74,9 @@ urlpatterns = patterns('',
 
     url(r'^about/$', 'smart_qdu.views.about'),
     url('^contact/$', 'smart_qdu.views.contact'),
+
+    url(r'^sign/management/$', 'TiebaSign.views.sign_management'),
+    url(r'^sign/add_account/$', 'TiebaSign.views.add_account'),
+
+
   )

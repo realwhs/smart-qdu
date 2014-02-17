@@ -3,7 +3,7 @@
 import os
 #本机开发为dev  sae线上环境为sae  其他为mysql环境
 ENV = "sae"
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -167,6 +167,7 @@ INSTALLED_APPS = (
     #'Vote',
     'Courses',
     'Mail',
+    'TiebaSign',
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
