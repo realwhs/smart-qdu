@@ -1,5 +1,6 @@
 #coding:utf-8
 from django.shortcuts import render
+from django.http import HttpResponse
 from Mail.models import Mail
 
 
@@ -17,3 +18,7 @@ def about(request):
 
 def contact(request):
     return render(request, "contact.html")
+
+
+def verify(request):
+    return HttpResponse("efb54a79260d496bd26b852fd78ae089")

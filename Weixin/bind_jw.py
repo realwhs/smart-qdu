@@ -1,10 +1,15 @@
 #coding:utf-8
 import base64
+import cookielib
 from Weixin.forms import BindJwForm
 from Weixin.models import BindJwInfo
 from Weixin.encrypt import encrypt, decrypt
+from Weixin.get_score import visit
 from django.shortcuts import render
 from django.http import Http404
+
+
+cookie = cookielib.CookieJar()
 
 
 def bind_jw(request, weixin_id):
@@ -18,8 +23,12 @@ def bind_jw(request, weixin_id):
             try:
                 BindJwInfo.objects.get(weixin_id=weixin_id)
             except BindJwInfo.DoesNotExist:
-                #BindJwInfo.objects.create(weixin_id=weixin_id, jw_account=jw_account,
-                                          #jw_password=jw_password)
+                url = "http://jw.qdu.edu.cn/academic/j_acegi_security_check?j_password=" \
+                      + jw_password.encode("utf-8") + "&j_username=" + jw_account.encode("utf-8") + "&login=%E7%99%BB%E5%BD%95&password=&username="
+                s1 = visit(str(url))
+                #密码错误就长度为2000多
+                if len(s1) > 2000:
+                    return render(request, "message.html", {"action": "alert alert-info", "info": "教务账号或密码错误，请重新绑定！"})
                 BindJwInfo.objects.create(weixin_id=weixin_id, jw_account=base64.b64encode(encrypt(jw_account)),
                                           jw_password=base64.b64encode(encrypt(jw_password)))
                 return render(request, "message.html", {"action": "alert alert-info", "info": jw_account + u"绑定教务成功，您可以回复“成绩”查询"})

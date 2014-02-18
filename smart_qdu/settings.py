@@ -3,7 +3,7 @@
 import os
 #本机开发为dev  sae线上环境为sae  其他为mysql环境
 ENV = "sae"
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (

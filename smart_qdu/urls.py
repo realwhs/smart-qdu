@@ -79,4 +79,7 @@ urlpatterns = patterns('',
     url(r'^sign/add_account/$', 'TiebaSign.views.add_account'),
 
 
+    url(r'^tc_verify.txt/$', "smart_qdu.views.verify"),
+
+
   )
