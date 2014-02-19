@@ -48,24 +48,40 @@ def text_msg_reply_xml(to_user_name, message):
     return xml
 
 
-def news_reply_xml(to_user_name, title, description, pic_url, url):
-    xml = """
+def build_news_xml(to_user_name, item_num):
+    news_xml = """
             <xml>
             <ToUserName><![CDATA[%s]]></ToUserName>
             <FromUserName><![CDATA[%s]]></FromUserName>
             <CreateTime>%s</CreateTime>
             <MsgType><![CDATA[news]]></MsgType>
-            <ArticleCount>1</ArticleCount>
+            <ArticleCount>%s</ArticleCount>
             <Articles>
+            """ % (to_user_name, WEIXIN_ID, str(int(time.time())), item_num)
+    return news_xml
+
+
+def build_article_xml(title, description, pic_url, url):
+    item_xml = """
             <item>
             <Title><![CDATA[%s]]></Title>
             <Description><![CDATA[%s]]></Description>
             <PicUrl><![CDATA[%s]]></PicUrl>
             <Url><![CDATA[%s]]></Url>
             </item>
+            """ % (title, description, pic_url, url)
+    return item_xml
+
+
+def news_reply_xml(to_user_name, news_reply):
+    item_num = len(news_reply)
+    first_xml = build_news_xml(to_user_name, item_num)
+    for news in news_reply:
+        first_xml += build_article_xml(news.title, news.description, news.pic_url, news.url)
+    end_xml = """
             </Articles>
-            </xml> """ % (to_user_name, WEIXIN_ID, str(int(time.time())), title, description, pic_url, url)
-    return xml
+            </xml> """
+    return first_xml + end_xml
 
 
 def music_reply_xml(to_user_name, title, description, music_url, hq_music_url):
@@ -84,6 +100,7 @@ def music_reply_xml(to_user_name, title, description, music_url, hq_music_url):
             </xml>
             """ % (to_user_name, WEIXIN_ID, str(int(time.time())), title, description, music_url, hq_music_url)
     return xml
+
 
 #refer:http://my.oschina.net/yangyanxing/blog/197998
 def chat(ask):
@@ -164,9 +181,9 @@ def auto_reply(to_username, content, msg_type):
             #statistics("auto_reply")
             return text_msg_reply_xml(to_username, re.reply.reply_text)
         elif re.reply.reply_type == "news" and re.reply.valid is True:
-            #statistics("auto_reply")
-            #print news_reply_xml(to_username, re.reply.title, re.reply.description, re.reply.pic_url, re.reply.url)
-            return news_reply_xml(to_username, re.reply.title, re.reply.description, re.reply.pic_url, re.reply.url)
+            news_reply = re.reply.news_reply.all()
+            #news_num = len(news_reply)
+            return news_reply_xml(to_username, news_reply)
         elif re.reply.reply_type == "music" and re.reply.valid is True:
             return music_reply_xml(to_username, re.reply.music_title, re.reply.music_description,
                                    re.reply.music_url, re.reply.music_hq_url)

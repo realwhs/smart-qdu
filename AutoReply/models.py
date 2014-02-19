@@ -2,6 +2,19 @@
 from django.db import models
 
 
+#用于图文回复的
+class News(models.Model):
+    title = models.CharField(max_length=20, blank=True)
+    description = models.TextField(blank=True)
+    #图片链接，支持JPG、PNG格式，较好的效果为大图360*200，小图200*200
+    pic_url = models.URLField(blank=True)
+    #点击图文消息跳转链接
+    url = models.URLField(blank=True)
+
+    def __unicode__(self):
+        return "%s" % (self.title, )
+
+
 class Reply(models.Model):
     valid = models.BooleanField("有效？", default=True)
     reply_type_choice = (("text", "text"), ("news", "news"), ("music", "music"), ("action", "action"), )
@@ -11,12 +24,7 @@ class Reply(models.Model):
     reply_text = models.TextField(blank=True)
     ########################
     #下面的用于图文回复
-    title = models.CharField(max_length=20, blank=True)
-    description = models.TextField(blank=True)
-    #图片链接，支持JPG、PNG格式，较好的效果为大图360*200，小图200*200
-    pic_url = models.URLField(blank=True)
-    #点击图文消息跳转链接
-    url = models.URLField(blank=True)
+    news_reply = models.ManyToManyField(News, blank=True)
     ########################
     #下面是回复音乐
     music_title = models.CharField(max_length=30, blank=True)

@@ -14,6 +14,10 @@ class ReplyAdmin(admin.ModelAdmin):
     list_display = ("reply_text","reply_type","valid",)
 
 
+class NewsAdmin(admin.ModelAdmin):
+    list_display = ("title", )
+
+
 class UnrecognizedWordAdmin(admin.ModelAdmin):
     list_display = ("content", "time", "dealt")
     list_filter = ("time",)
@@ -28,6 +32,7 @@ class UserStatusAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Reply, ReplyAdmin)
+admin.site.register(News, NewsAdmin)
 admin.site.register(UnrecognizedWord, UnrecognizedWordAdmin)
 admin.site.register(UnrecognizedWordReply, UnrecognizedWordReplyAdmin)
 admin.site.register(UserStatus, UserStatusAdmin)
