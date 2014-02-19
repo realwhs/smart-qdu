@@ -34,6 +34,7 @@ urlpatterns = patterns('',
     url(r'^lost_and_found/post_info/(?P<info_type>\w+)/$', 'LostAndFound.views.post_info'),
     url(r'^lost_and_found/info/(?P<info_id>\d+)/$', 'LostAndFound.views.show_info_detail'),
     url(r'^lost_and_found/info/(?P<info_id>\d+)/post_comment/$', 'LostAndFound.views.post_comment'),
+    url(r'^lost_and_found/info/(?P<info_id>\d+)/get_contact/$', 'LostAndFound.views.get_contact'),
     url(r'^lost_and_found/info/(?P<info_id>\d+)/mark/$', 'LostAndFound.views.mark_item_status'),
     url(r'^lost_and_found/info_list/(?P<page_num>\d+)/$', 'LostAndFound.views.show_info_list'),
 
@@ -79,7 +80,7 @@ urlpatterns = patterns('',
     url(r'^sign/add_account/$', 'TiebaSign.views.add_account'),
 
 
-    url(r'^tc_verify.txt/$', "smart_qdu.views.verify"),
-
+    url(r'^get_verify_code/$', "smart_qdu.views.get_verify_code"),
+    url(r'^upload/$', 'smart_qdu.views.upload'),
 
   )

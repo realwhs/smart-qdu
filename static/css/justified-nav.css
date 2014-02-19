@@ -20,7 +20,7 @@ body {
 
 .nav-justified {
   background-color: #eee;
-  border-radius: 5px;
+  border-radius: 3px;
   border: 1px solid #ccc;
 }
 .nav-justified > li > a {

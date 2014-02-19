@@ -1,108 +1,109 @@
 <div class="container">
     <div class="panel panel-primary">
         <div class="panel-body">
-            请认真填写表单，全部为必填项！发布后可以在控制面板中管理！
+            请认真填写表单，发布后可以在控制面板中管理！
         </div>
         <div class="panel-footer">
             <div class="panel-group">
 
-                        <div class="panel-body">
-                            <div class="form-inline">
-                                <form enctype="multipart/form-data" id="post_info_form" role="form" action="/lost_and_found/post_info/{{ info_type }}/" method="post">
-                                    {% csrf_token %}
-                                    <div class="form-group">
-                                        <label for="lost_item_name">
-                                            物品名称
-                                        </label>
-                                        <input type="text" class="form-control" name="item_name" id="lost_item_name"
-                                               placeholder="物品名称">
-                                    </div>
-                                    &nbsp;
-                                    <div class="form-group">
-                                        <label for="lost_location">
-                                            地点
-                                        </label>
-                                        <input type="text" class="form-control" name="location" id="lost_location"
-                                               placeholder="地点">
-                                    </div>
-                                    &nbsp;
-                                    <div class="form-group">
-                                        <label for="lost_time">
-                                            日期(如果无法显示日期选择框，请按照 2014-01-23 格式输入）
-                                        </label>
-                                        <input type="date" class="form-control" name="time" id="lost_time"
-                                               placeholder="时间">
-                                    </div>
-                                    <br/><br/>
-
-                                    <div class="item_type_select">
-                                        <label for="lost_item_type">
-                                            物品类型
-                                        </label>
-                                        <select class="form-control" id="lost_item_type" name="item_type">
-                                            {% for item in item_type %}
-                                            <option value="{{ item.0 }}"> {{ item.1 }}</option>
-                                            {% endfor %}
-                                        </select>
-                                    </div>
-                                    <br/>
-
-                                    <div class="content">
-                                        <label for="lost_content">
-                                            说明
-                                        </label>
-                                        <textarea class="form-control" rows="3" name="content"
-                                                  id="lost_content" placeholder="请详细描述物品的外形颜色特征等"></textarea>
-                                    </div>
-                                    <br/>
-
-                                    <div class="form-group">
-                                        <label for="lost_name">
-                                            姓名
-                                        </label>
-                                        <input type="text" class="form-control" name="name" id="lost_name"
-                                               placeholder="姓名">
-                                    </div>
-                                    &nbsp;
-                                    <div class="form-group">
-                                        <label for="lost_phone">
-                                            手机号码
-                                        </label>
-                                        <input type="text" class="form-control" name="phone" id="lost_phone"
-                                               placeholder="手机号码" maxlength="11">
-                                    </div>
-                                    &nbsp;
-                                    <div class="form-group">
-                                        <label for="lost_email">
-                                            email
-                                        </label>
-                                        <input type="email" class="form-control" name="email" id="lost_email"
-                                               placeholder="email" value="{{ user.email }}">
-                                    </div>
-                                    &nbsp;
-                                    <div class="form-group">
-                                        <label for="lost_qq">
-                                            qq
-                                        </label>
-                                        <input type="text" class="form-control" name="qq" id="lost_qq" placeholder="qq">
-                                    </div>
-                                    &nbsp;<br/><br/>
-                                    <!--<label>
-                                        上传图片
-                                    </label>
-                                    <input name="image" type="file"><br/><br/>-->
-
-                                    <button type="submit" class="btn btn-lg btn-primary btn-block col-sm-4"
-                                            id="post_info_submit">提交
-                                    </button>
-
-
-                                </form>
+                <div class="panel-body">
+                    <div class="form-inline">
+                        <form enctype="multipart/form-data" id="post_info_form" role="form"
+                              action="/lost_and_found/post_info/{{ info_type }}/" method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="lost_item_name">
+                                    物品名称
+                                </label>
+                                <input type="text" class="form-control" name="item_name" id="lost_item_name"
+                                       placeholder="物品名称">
                             </div>
-                        </div>
+                            &nbsp;
+                            <div class="form-group">
+                                <label for="lost_location">
+                                    地点
+                                </label>
+                                <input type="text" class="form-control" name="location" id="lost_location"
+                                       placeholder="地点">
+                            </div>
+                            &nbsp;
+                            <div class="form-group">
+                                <label for="lost_time">
+                                    日期(如果无法显示日期选择框，请按照 2014-01-23 格式输入）
+                                </label>
+                                <input type="date" class="form-control" name="time" id="lost_time"
+                                       placeholder="时间">
+                            </div>
+                            <br/><br/>
+
+                            <div class="item_type_select">
+                                <label for="lost_item_type">
+                                    物品类型
+                                </label>
+                                <select class="form-control" id="lost_item_type" name="item_type">
+                                    {% for item in item_type %}
+                                    <option value="{{ item.0 }}"> {{ item.1 }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <br/>
+
+                            <div class="content">
+                                <label for="lost_content">
+                                    说明
+                                </label>
+                                <textarea class="form-control" rows="3" name="content"
+                                          id="lost_content" placeholder="请详细描述物品的外形颜色特征等"></textarea>
+                            </div>
+                            <br/>
+
+                            <div class="form-group">
+                                <label for="lost_name">
+                                    姓名
+                                </label>
+                                <input type="text" class="form-control" name="name" id="lost_name"
+                                       placeholder="姓名">
+                            </div>
+                            &nbsp;
+                            <div class="form-group">
+                                <label for="lost_phone">
+                                    手机号码
+                                </label>
+                                <input type="text" class="form-control" name="phone" id="lost_phone"
+                                       placeholder="手机号码" maxlength="11">
+                            </div>
+                            &nbsp;
+                            <div class="form-group">
+                                <label for="lost_email">
+                                    email
+                                </label>
+                                <input type="email" class="form-control" name="email" id="lost_email"
+                                       placeholder="email" value="{{ user.email }}">
+                            </div>
+                            &nbsp;
+                            <div class="form-group">
+                                <label for="lost_qq">
+                                    qq(可选)
+                                </label>
+                                <input type="text" class="form-control" name="qq" id="lost_qq" placeholder="qq">
+                            </div>
+                            &nbsp;<br/><br/>
+                            <label>
+                                上传图片(可选,建议800K以下)
+                            </label>
+                            <input id="file_upload" type="file" name="image">
+
+                                <button type="submit" class="btn btn-lg btn-primary btn-block col-sm-4"
+                                        id="post_info_submit">提交
+                                </button>
+
+
+                        </form>
                     </div>
-
-
+                </div>
             </div>
+
+
         </div>
     </div>
+</div>

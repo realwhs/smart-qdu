@@ -10,8 +10,8 @@ class PostInfoForm(forms.Form):
     time = forms.DateField()
     name = forms.CharField(max_length=15)
     phone = forms.CharField(max_length=11)
-    qq = forms.CharField(max_length=11)
-    email = forms.EmailField()
+    qq = forms.CharField(max_length=11, required=False)
+    email = forms.EmailField(required=False)
 
 
 class CommentForm(forms.Form):

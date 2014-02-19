@@ -5,6 +5,8 @@ libraries:
   version: "2.3.4"
 - name: "PyCrypto"
   version: "2.6"
+- name: "PIL"
+  version: "1.7.7"
 handle:
 - errordoc: 500 /500/
 - expire: if( path ~ "*.js" ) time 3600

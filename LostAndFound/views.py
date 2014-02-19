@@ -7,6 +7,7 @@ import time
 import sae.const
 import sae.storage
 import os.path
+from DjangoCaptcha import Captcha
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render
 from django.core.paginator import Paginator
@@ -52,11 +53,10 @@ def post_info(request, info_type="lost"):
             #return HttpResponse(request.FILES['image'])
             try:
                 image = request.FILES["image"]
-                if not (os.path.splitext(image.name) == ".jpg"
-                        or os.path.splitext(image.name) == ".png"
-                        or os.path.splitext(image.name) == ".bmp"):
-                    response_json = {"status": "error", "content": "上传图片错误，请确保拓展名为jpg, png或bmp!"}
-                    return HttpResponse(json.dumps(response_json))
+                if not (os.path.splitext(image.name)[-1] == ".jpg"
+                        or os.path.splitext(image.name)[-1] == ".png"
+                        or os.path.splitext(image.name)[-1] == ".bmp"):
+                    return render(request, "message.html", {"action": "alert alert-info", "info": "文件拓展名错误！"})
                 image_url = save_file(image)
             except KeyError:
                 image_url = None
@@ -64,11 +64,11 @@ def post_info(request, info_type="lost"):
                                              item_name=item_name, item_type=item_type, image_url=image_url,
                                              content=content, location=location, time=time,
                                              name=name, phone=phone, qq=qq, email=email, status=True)
-            response_json = {"status": "success", "redirect": "/lost_and_found/info/" + str(info.id)}
-            return HttpResponse(json.dumps(response_json))
+            #response_json = {"status": "success", "redirect": "/lost_and_found/info/" + str(info.id)}
+            #return HttpResponse(json.dumps(response_json))
+            return HttpResponseRedirect("/lost_and_found/info/" + str(info.id))
         else:
-            response_json = {"status": "error", "content": "表单数据错误，请检查所有的必填项目！"}
-            return HttpResponse(json.dumps(response_json))
+            return render(request, "message.html", {"action": "alert alert-info", "info": "表单数据错误！请检查填写！"})
     else:
         if info_type == "lost":
             return render(request, "LostAndFound/post_info_form.html", {"item_type": ITEM_TYPE_CHOICE,
@@ -87,6 +87,28 @@ def show_info_detail(request, info_id):
         raise Http404
     return render(request, "LostAndFound/info_page.html",
                   {"info": info, "comment": info.comment.all(), "info_id": info_id})
+
+
+def get_contact(request, info_id):
+    try:
+        info = InfoDetail.objects.get(id=info_id)
+    except InfoDetail.DoesNotExist:
+        raise Http404
+    _code = request.POST.get('verify_code', " ")
+    ca = Captcha(request)
+    if not ca.check(_code):
+        response_json = {"status": "error", "content": "验证码错误"}
+        return HttpResponse(json.dumps(response_json))
+    else:
+        response_str = u""
+        if info.phone:
+            response_str += (u"手机：" + info.phone + u"；")
+        if info.email:
+            response_str += (u"邮箱：" + info.email + u"；")
+        if info.qq:
+            response_str += (u"qq：" + info.qq + u"；")
+        response_json = {"status": "success", "content": response_str}
+        return HttpResponse(json.dumps(response_json))
 
 
 #@login_required(login_url="/login/")
@@ -127,10 +149,13 @@ def mark_item_status(request, info_id):
 
 def show_info_list(request, page_num):
     info_all = InfoDetail.objects.filter(status=True).order_by("-id")
-    page_info = Paginator(info_all, 30)
+    page_info = Paginator(info_all, 5)
     total_page = page_info.num_pages
     if int(page_num) > total_page:
         raise Http404
-    return render(request, "LostAndFound/info_list.html", {"info": page_info.page(page_num), "page_num": str(page_num),
-                                                           "total_page": str(total_page), "next_page": str(int(page_num) + 1)})
+    return render(request, "LostAndFound/info_list.html", {"info": page_info.page(page_num),
+                                                           "page_num": str(page_num),
+                                                           "total_page": str(total_page),
+                                                           "next_page": str(int(page_num) + 1),
+                                                           "pre_page": str(int(page_num) - 1)})
 

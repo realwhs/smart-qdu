@@ -1,6 +1,5 @@
 
-<!-- action参数  alert alert-success  info  warning  danger
-     info参数要显示的信息-->
+
 <div class="container">
     {% ifequal info.info_type "lost" %}
     <div class="panel panel-danger">
@@ -16,9 +15,18 @@
             说 明：{{ info.content }}<br/><br/>
             {% if info.image_url %}
                 <img src="{{ info.image_url }}" class="img-responsive" alt="Responsive image">
-            {% endif %}
+            {% endif %}<br/><br/>
             丢失人姓名：{{ info.name }}<br/><br/>
+            联系方式：<span id="contact"></span>
 
+            <form class="form-inline"  id="get_contact_form" method="POST" action="/lost_and_found/info/{{ info_id }}/get_contact/">{% csrf_token %}
+                <img src='/get_verify_code/'>
+        <div class="form-group">
+            <input type="text" class="form-control" name="verify_code" placeholder="验证码">
+            </div>
+            <button type="submit" class="btn btn-default" id="get_contact_submit">提交</button>
+
+                </form><br/><br/>
             {% for item in comment reversed %}
             <div class="panel panel-info">
                 <div class="panel-heading"><a href="/mail/send_mail/?to_user={{ item.author }}"><code>{{ item.author }}</code></a> published at <em>{{ item.publish_time }}</em>
@@ -55,7 +63,19 @@
             时 间：{{ info.time }}<br/><br/>
             发布时间：{{ info.publish_time }}<br/><br/>
             说 明：{{ info.content }}<br/><br/>
+            {% if info.image_url %}
+                <img src="{{ info.image_url }}" class="img-responsive" alt="Responsive image">
+            {% endif %}<br/><br/>
             拾获人姓名：{{ info.name }}<br/><br/>
+            联系方式：<span id="contact">请输入验证码！</span>
+            <form class="form-inline"  id="get_contact_form" method="POST" action="/lost_and_found/info/{{ info_id }}/get_contact/">{% csrf_token %}
+                <img src='/get_verify_code/'>
+        <div class="form-group">
+            <input type="text" class="form-control" name="verify_code" placeholder="验证码">
+            </div>
+            <button type="submit" class="btn btn-default" id="get_contact_submit">提交</button>
+
+                </form><br/><br/>
 
             {% for item in comment reversed %}
             <div class="panel panel-info">

@@ -17,8 +17,15 @@
         <div class="panel-body">
             <button type="button" class="btn btn-primary" onclick="window.location.href='/change_password/'">修改密码
             </button>
-            <br/><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;
             <button type="button" class="btn btn-danger" onclick="window.location.href='/logout/'">退出登录</button>
+            <br/><br/>
+            {% if control_panel %}
+                <button type="button" class="btn btn-primary" onclick="window.location.href='/online_shop/order_management/'">订单管理
+                </button>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <button type="button" class="btn btn-primary" onclick="window.location.href='/admin/'">后台管理</button>
+            {% endif %}
         </div>
     </div>
     <div class="panel panel-primary">
