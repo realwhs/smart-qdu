@@ -10,11 +10,11 @@
             {% endif %}
             物品类别：{{ info.item_type }}<br/><br/>
             物品名称：{{ info.item_name }}<br/><br/>
-            时 间：{{ info.time }}<br/><br/>
-            发布时间：{{ info.publish_time }}<br/><br/>
-            说 明：{{ info.content }}<br/><br/>
+            时 间：{{ info.time|date:"Y年m月d日" }}<br/><br/>
+            发布时间：{{ info.publish_time|date:"Y年m月d日 H时i分" }}<br/><br/>
+            说 明：{{ info.content }}
             {% if info.image_url %}
-                <img src="{{ info.image_url }}" class="img-responsive" alt="Responsive image">
+                <br/><br/><img src="{{ info.image_url }}" class="img-responsive" alt="Responsive image">
             {% endif %}<br/><br/>
             丢失人姓名：{{ info.name }}<br/><br/>
             联系方式：<span id="contact"></span>
@@ -29,7 +29,7 @@
                 </form><br/><br/>
             {% for item in comment reversed %}
             <div class="panel panel-info">
-                <div class="panel-heading"><a href="/mail/send_mail/?to_user={{ item.author }}"><code>{{ item.author }}</code></a> published at <em>{{ item.publish_time }}</em>
+                <div class="panel-heading"><a href="/mail/send_mail/?to_user={{ item.author }}"><code>{{ item.author }}</code></a> published at <em>{{ item.publish_time|date:"Y年m月d日 H时i分" }}</em>
                 </div>
                 <div class="panel-body">
                     {{ item.content }}
@@ -60,11 +60,11 @@
             {% endif %}
             物品类别：{{ info.item_type }}<br/><br/>
             物品名称：{{ info.item_name }}<br/><br/>
-            时 间：{{ info.time }}<br/><br/>
-            发布时间：{{ info.publish_time }}<br/><br/>
-            说 明：{{ info.content }}<br/><br/>
+            时 间：{{ info.time|date:"Y年m月d日" }}<br/><br/>
+            发布时间：{{ info.publish_time|date:"Y年m月d日 H时i分" }}<br/><br/>
+            说 明：{{ info.content }}
             {% if info.image_url %}
-                <img src="{{ info.image_url }}" class="img-responsive" alt="Responsive image">
+                <br/><br/><img src="{{ info.image_url }}" class="img-responsive" alt="Responsive image">
             {% endif %}<br/><br/>
             拾获人姓名：{{ info.name }}<br/><br/>
             联系方式：<span id="contact">请输入验证码！</span>
@@ -79,7 +79,7 @@
 
             {% for item in comment reversed %}
             <div class="panel panel-info">
-                <div class="panel-heading"><a href="/mail/send_mail/?to_user={{ item.author }}"><code>{{ item.author }}</code></a> published at <em>{{ item.publish_time }}</em>
+                <div class="panel-heading"><a href="/mail/send_mail/?to_user={{ item.author }}"><code>{{ item.author }}</code></a> published at <em>{{ item.publish_time|date:"Y年m月d日 H时i分" }}</em>
                 </div>
                 <div class="panel-body">
                     {{ item.content }}

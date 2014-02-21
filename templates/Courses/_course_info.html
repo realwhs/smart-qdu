@@ -31,7 +31,7 @@
                 {% if item.is_anonymous %}
                 <div class="panel-heading"><em> 匿名用户 </em> 发表于 <em>{{ item.publish_time }}</em></div>
                 {% else %}
-                <div class="panel-heading"><em><a href="/mail/send_mail/?to_user={{ item.user_name }}"><code>{{ item.user_name }}</code></a></em> 发表于 <em>{{ item.publish_time }}</em>
+                <div class="panel-heading"><em><a href="/mail/send_mail/?to_user={{ item.user_name }}"><code>{{ item.user_name }}</code></a></em> 发表于 <em>{{ item.publish_time|date:"Y年m月d日 H时i分" }}</em>
                 </div>
                 {% endif %}
                 <div class="panel-body">

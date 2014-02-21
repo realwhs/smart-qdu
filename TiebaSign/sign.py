@@ -134,4 +134,3 @@ def auto_sign(user_name, password):
                 tmp_dic["status"] = False
         info_list.append(tmp_dic)
     return {"status": True, "result": info_list}
-

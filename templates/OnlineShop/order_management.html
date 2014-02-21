@@ -7,16 +7,36 @@
 
 <div class="container">
     <h3>订单管理</h3>
-<ul class="list-group">
-    {% for item in order reversed %}
-    <li class="list-group-item"><a href="/online_shop/order/{{ item.order_info.id }}/" target="_blank">
-        【{{ item.order_info.id }}】 -- {{ item.item_name }} -- {{ item.order_info.number }}件 -- {{ item.order_info.total_price }}元 --
-        {{ item.order_info.user_name }} -- {{ item.order_info.address_info.name }} -- {{ item.order_info.address_info.phone }} --
-        {{ item.order_info.address_info.address }} -- 【{{ item.order_info.status }}】</a>
-        <button type="button" class="btn btn-info btn-sm" onclick="window.open('/admin/OnlineShop/order/{{ item.order_info.id }}/')">管理</button>
-    </li>
-    {% endfor %}
-</ul>
+    <ul class="list-group">
+        {% for item in order %}
+        <li class="list-group-item"><a href="/online_shop/order/{{ item.order_info.id }}/" target="_blank">
+            【{{ item.order_info.id }}】 -- {{ item.item_name }} -- {{ item.order_info.number }}件 -- {{ item.order_info.total_price }}元 --
+            {{ item.order_info.user_name }} -- {{ item.order_info.address_info.name }} --
+            {{ item.order_info.address_info.phone }} --
+            {{ item.order_info.address_info.address }} -- 【{{ item.order_info.status }}】</a>
+            <button type="button" class="btn btn-info btn-sm"
+                    onclick="window.open('/admin/OnlineShop/order/{{ item.order_info.id }}/')">管理
+            </button>
+        </li>
+        {% endfor %}
+    </ul>
+    <ul class="pager">
+        {% ifequal page_num total_page %}
+            {% ifequal page_num "1" %}
+                当前第{{ page_num }}页，最后一页
+            {% else %}
+                <li class="previous"><a href="/online_shop/order_management/{{ pre_page }}">&larr; 上一页</a></li>
+                当前第{{ page_num }}页，最后一页
+            {% endifequal %}
+        {% else %}
+            {% ifequal page_num "1" %}
+                <li class="next"><a href="/online_shop/order_management/{{ next_page }}">下一页 &rarr;</a></li>
+            {% else %}
+                <li class="previous"><a href="/online_shop/order_management/{{ pre_page }}">&larr; 上一页</a></li>
+                <li class="next"><a href="/online_shop/order_management/{{ next_page }}">下一页 &rarr;</a></li>
+            {% endifequal %}
+        {% endifequal %}
+    </ul>
 </div>
 
 

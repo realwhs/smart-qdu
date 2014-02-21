@@ -21,7 +21,12 @@
             {% endfor %}
 
         </ul>
+
     </div>
+    <ul class="pager">
+        <li class="next"><a href="/mail/received/1/">更多</a></li>
+
+        </ul>
     <br/><br/>
       <div class="panel panel-default">
 
@@ -32,7 +37,12 @@
             <li class="list-group-item"><a href="/mail/read_mail/{{ item.id }}/">{{ item.create_time }} -- {{ item.to_user }} -- {{ item.subject}}</a></li>
             {% endfor %}
         </ul>
+
     </div>
+    <ul class="pager">
+        <li class="next"><a href="/mail/sent/1/">更多</a></li>
+
+        </ul>
 </div>
 
 {% endblock %}

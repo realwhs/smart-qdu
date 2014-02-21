@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+
+{% block body %}
+
+{% include "_nav_bar.html" %}
+<div class="container">
+    {% ifequal type "received" %}
+        <ul class="list-group">
+            {% for item in info %}
+                {% if item.status %}
+                      <li class="list-group-item"><a href="/mail/read_mail/{{ item.id }}/">{{ item.create_time }} -- {{ item.from_user }} -- {{ item.subject}}</a></li>
+                {% else %}
+                       <li class="list-group-item"><a href="/mail/read_mail/{{ item.id }}/">【未读】{{ item.create_time }} -- {{ item.from_user }} -- {{ item.subject}}</a></li>
+                {% endif %}
+            {% endfor %}
+
+        </ul>
+        <ul class="pager">
+        {% ifequal page_num total_page %}
+            {% ifequal page_num "1" %}
+                当前第{{ page_num }}页，最后一页
+            {% else %}
+                <li class="previous"><a href="/mail/received/{{ pre_page }}/">&larr; 上一页</a></li>
+                当前第{{ page_num }}页，最后一页
+            {% endifequal %}
+        {% else %}
+            {% ifequal page_num "1" %}
+                <li class="next"><a href="/mail/received/{{ next_page }}">下一页 &rarr;</a></li>
+            {% else %}
+                <li class="previous"><a href="/mail/received/{{ pre_page }}">&larr; 上一页</a></li>
+                <li class="next"><a href="/mail/received/{{ next_page }}">下一页 &rarr;</a></li>
+            {% endifequal %}
+        {% endifequal %}
+    </ul>
+    {% else %}
+        <ul class="list-group">
+            {% for item in info %}
+            <li class="list-group-item"><a href="/mail/read_mail/{{ item.id }}/">{{ item.create_time }} -- {{ item.to_user }} -- {{ item.subject}}</a></li>
+            {% endfor %}
+        </ul>
+        {% ifequal page_num total_page %}
+            {% ifequal page_num "1" %}
+                当前第{{ page_num }}页，最后一页
+            {% else %}
+                <li class="previous"><a href="/mail/received/{{ pre_page }}/">&larr; 上一页</a></li>
+                当前第{{ page_num }}页，最后一页
+            {% endifequal %}
+        {% else %}
+            {% ifequal page_num "1" %}
+                <li class="next"><a href="/mail/sent/{{ next_page }}">下一页 &rarr;</a></li>
+            {% else %}
+                <li class="previous"><a href="/mail/sent/{{ pre_page }}">&larr; 上一页</a></li>
+                <li class="next"><a href="/mail/sent/{{ next_page }}">下一页 &rarr;</a></li>
+            {% endifequal %}
+        {% endifequal %}
+    {% endifequal %}
+
+</div>
+
+{% endblock %}

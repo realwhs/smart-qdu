@@ -4,6 +4,7 @@ import json
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render
 from Mail.models import Mail
+from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from OnlineShop.forms import ItemNumberForm, OrderForm
 from OnlineShop.models import ItemInfo, Order, AddressInfo, STATUS_CHOICES
@@ -135,11 +136,16 @@ def shop_index(request):
 
 
 @login_required(login_url="/login/")
-def order_management(request):
+def order_management(request, page_num):
     if request.user.is_staff is True:
-        order_info = Order.objects.order_by("create_time")
+        order_info = Order.objects.order_by("-create_time")
+        page_info = Paginator(order_info, 15)
+        total_page = page_info.num_pages
+        if int(page_num) > total_page:
+            raise Http404
         order_list = []
-        for item in order_info:
+        info = page_info.page(page_num)
+        for item in info:
             order = {}
             item_info = ItemInfo.objects.get(id=item.item_id)
             for choice in STATUS_CHOICES:
@@ -148,7 +154,11 @@ def order_management(request):
             order["item_name"] = item_info.name
             order['order_info'] = item
             order_list.append(order)
-        return render(request, "OnlineShop/order_management.html", {"order": order_list})
+        return render(request, "OnlineShop/order_management.html", {"order": order_list,
+                                                                    "page_num": str(page_num),
+                                                                    "pre_page": str(int(page_num) - 1),
+                                                                    "next_page": str(int(page_num) + 1),
+                                                                    "total_page": str(total_page)})
     else:
         raise Http404
 

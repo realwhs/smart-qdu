@@ -22,6 +22,9 @@ def register(request):
         if form.is_valid():
             user_name = form.cleaned_data["user_name"]
             password1 = form.cleaned_data["password1"]
+            if len(user_name) >= 7:
+                response_json = {"status": "error", "content": "用户名最长为7个字符！"}
+                return HttpResponse(json.dumps(response_json))
             #password2 = form.cleaned_data["password2"]
             #注意  这个地方是简化注册步骤  只输入一个密码即可  兼容以前的设计
             password2 = password1

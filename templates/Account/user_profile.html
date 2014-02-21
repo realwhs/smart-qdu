@@ -21,7 +21,7 @@
             <button type="button" class="btn btn-danger" onclick="window.location.href='/logout/'">退出登录</button>
             <br/><br/>
             {% if control_panel %}
-                <button type="button" class="btn btn-primary" onclick="window.location.href='/online_shop/order_management/'">订单管理
+                <button type="button" class="btn btn-primary" onclick="window.location.href='/online_shop/order_management/1/'">订单管理
                 </button>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <button type="button" class="btn btn-primary" onclick="window.location.href='/admin/'">后台管理</button>
@@ -57,7 +57,7 @@
         <div class="panel-body">
             <ul>
                 {% for item in order %}
-                    <p>订单编号:<a href="/online_shop/order/{{ item.id }}/">{{ item.id }}</a> 创建时间：{{ item.create_time }} </p>
+                    <p>订单编号:<a href="/online_shop/order/{{ item.id }}/">{{ item.id }}</a> 创建时间：{{ item.create_time|date:"Y年m月d日 H时i分" }} </p>
                 {% endfor %}
             </ul>
         </div>
