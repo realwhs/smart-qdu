@@ -68,14 +68,8 @@ urlpatterns = patterns('',
     url(r'^bind_jw/(?P<weixin_id>.+)/$', 'Weixin.bind_jw.bind_jw'),
     url(r'^unbind_jw/(?P<weixin_id>.+)/$', 'Weixin.bind_jw.unbind_jw'),
 
-    url(r'^vote/(?P<vote_id>\d+)/(?P<weixin_id>.+)/$', 'Vote.views.vote'),
-
     url(r'^about/$', 'smart_qdu.views.about'),
     url('^contact/$', 'smart_qdu.views.contact'),
-
-    url(r'^sign/management/$', 'TiebaSign.views.sign_management'),
-    url(r'^sign/add_account/$', 'TiebaSign.views.add_account'),
-
 
     url(r'^get_verify_code/$', "smart_qdu.views.get_verify_code"),
     url(r'^upload/$', 'smart_qdu.views.upload'),
