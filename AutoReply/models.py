@@ -4,7 +4,7 @@ from django.db import models
 
 #用于图文回复的
 class News(models.Model):
-    title = models.CharField(max_length=20, blank=True)
+    title = models.CharField(max_length=50, blank=True)
     description = models.TextField(blank=True)
     #图片链接，支持JPG、PNG格式，较好的效果为大图360*200，小图200*200
     pic_url = models.URLField(blank=True)
