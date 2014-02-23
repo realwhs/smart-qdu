@@ -9,6 +9,8 @@ from AutoReply.models import Keyword, UnrecognizedWord, UnrecognizedWordReply, U
 from EmptyClassroom.views import query_empty_classroom_weixin
 from Vote.views import vote_reply
 from Weixin.get_score import get_score
+from Renren.models import Content
+from Renren.renren import RenRen
 
 
 #获取空气质量状况
@@ -114,7 +116,7 @@ def chat(ask):
         return "小黄鸡都被你们玩坏了，歇歇吧"
     reson = json.loads(resp.read())
     if reson["msg"] == "OK.":
-        if reson["response"].find(u"微信") == -1:
+        if reson["response"].replace(" ", "").find(u"微信") == -1:
             return reson["response"]
     return "小黄鸡都被你们玩坏了，歇歇吧"
 
@@ -133,6 +135,18 @@ def check_user_status(weixin_id, content):
             return "已经退出聊天状态"
         else:
             return chat(content)
+    elif r.status == "renren":
+        if len(content.replace(" ", "")) <= 5:
+            return "就这么几个字，再多写点吧~~"
+        r = RenRen()
+        reply = str(r.postStatus(content))
+        if reply == "<Response [200]>":
+            UserStatus.objects.get(weixin_id=weixin_id).delete()
+            Content.objects.create(content=content, status=True)
+            return "发布成功！"
+        else:
+            Content.objects.create(content=content, status=False)
+            return "出现错误！"
     else:
         return None
 
@@ -173,6 +187,10 @@ def auto_reply(to_username, content, msg_type):
                 except UserStatus.DoesNotExist:
                     return text_msg_reply_xml(to_username, "您没有进入聊天状态")
                 return text_msg_reply_xml(to_username, "已经恢复正常状态！")
+            elif re.reply.action == "create_renren_status":
+                UserStatus.objects.create(weixin_id=to_username, status="renren")
+                return text_msg_reply_xml(to_username, "你的下一条信息将发送到人人")
+
             else:
                 UnrecognizedWord.objects.create(content=content, time=datetime.datetime.now())
         #如果存在这个关键词 但是不是执行动作 就应该按照设置回复  其中回复分为纯文本回复和图文消息回复

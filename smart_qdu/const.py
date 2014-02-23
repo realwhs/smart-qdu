@@ -9,7 +9,4 @@ WEIXIN_APPSECRET = "a0d9cbf7b01ade43af81d4203e694eaa"
 ENCRYPT_KEY = "HSHA2DisAuh8f6dJ6Sfsd2DiuhJKfKf8"
 
 #renren oauth related
-RENREN_API_KEY = "dd73b67793c540dcacb98071a5243494"
-RENREN_SECRET_KEY = "57619bf21d5e40399e914cca2acb5c5f"
-RENREN_CALL_URL = "http://smartqdu.sinaapp.com/renren_callback/"
-RENREN_PAGE_ID = "601666792"
+RENREN_BASE_URL = 'http://3g.renren.com/profile.do?id=601666792&sid=LU0ILGs9mA4OIMMnvZUuT3&yxd0ge&htf=2'

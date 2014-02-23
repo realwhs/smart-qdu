@@ -2,7 +2,10 @@
 from django.db import models
 
 
-class RenrenOauth(models.Model):
-    access_token = models.CharField(max_length=200)
-    refresh_token = models.CharField(max_length=200)
-    date = models.DateField(auto_now=True)
+class Content(models.Model):
+    content = models.CharField(max_length=130)
+    create_time = models.DateTimeField(auto_now_add=True)
+    status = models.BooleanField()
+
+    def __unicode__(self):
+        return "%s %s" % (self.create_time, self.status)

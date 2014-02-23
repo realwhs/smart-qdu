@@ -50,21 +50,22 @@
             </table>
 
             <ul class="pager">
-                {% ifequal page_num total_page %}
+        {% ifequal page_num total_page %}
+            {% ifequal page_num "1" %}
+                当前第{{ page_num }}页，最后一页
+            {% else %}
                 <li class="previous"><a href="/lost_and_found/info_list/{{ pre_page }}">&larr; 上一页</a></li>
                 当前第{{ page_num }}页，最后一页
-                {% else %}
-                    {% ifequal page_num "1" %}
-                        当前第{{ page_num }}页，最后一页
-                    {% else %}
-                        <li class="previous"><a href="/online_shop/info_list/{{ pre_page }}">&larr; 上一页</a></li>
-                        当前第{{ page_num }}页，最后一页
-                    {% endifequal %}
-                    <li class="previous"><a href="/lost_and_found/info_list/{{ pre_page }}">&larr; 上一页</a></li>
-                    <li class="next"><a href="/lost_and_found/info_list/{{ next_page }}">下一页 &rarr;</a></li>
-                    {% endifequal %}
-                {% endifequal %}
-            </ul>
+            {% endifequal %}
+        {% else %}
+            {% ifequal page_num "1" %}
+                <li class="next"><a href="/lost_and_found/info_list/{{ next_page }}">下一页 &rarr;</a></li>
+            {% else %}
+                <li class="previous"><a href="/lost_and_found/info_list/{{ pre_page }}">&larr; 上一页</a></li>
+                <li class="next"><a href="/lost_and_found/info_list/{{ next_page }}">下一页 &rarr;</a></li>
+            {% endifequal %}
+        {% endifequal %}
+    </ul>
         </div>
     </div>
 </div>

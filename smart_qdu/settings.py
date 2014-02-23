@@ -3,7 +3,7 @@
 import os
 #本机开发为dev  sae线上环境为sae  其他为mysql环境
 ENV = "sae"
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -169,14 +169,14 @@ INSTALLED_APPS = (
     'Mail',
     #'TiebaSign',
 )
-
+'''
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
         'LOCATION': '127.0.0.1:11211',
     }
 }
-
+'''
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 
 AUTH_USER_MODEL = "Account.Passport"

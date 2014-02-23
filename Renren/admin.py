@@ -1,9 +1,10 @@
 #coding:utf-8
 from django.contrib import admin
-from Renren.models import RenrenOauth
-
-class RenrenOauthAdmin(admin.ModelAdmin):
-    list_display = ("access_token", "date")
+from Renren.models import Content
 
 
-admin.site.register(RenrenOauth, RenrenOauthAdmin)
+class ContentAdmin(admin.ModelAdmin):
+    list_dislay = ("create_time", "status")
+
+
+admin.site.register(Content, ContentAdmin)

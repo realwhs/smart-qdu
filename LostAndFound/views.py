@@ -56,7 +56,7 @@ def post_info(request, info_type="lost"):
                 if not (os.path.splitext(image.name)[-1] == ".jpg"
                         or os.path.splitext(image.name)[-1] == ".png"
                         or os.path.splitext(image.name)[-1] == ".bmp"):
-                    return render(request, "message.html", {"action": "alert alert-info", "info": "文件拓展名错误！"})
+                    return render(request, "message.html", {"action": "alert alert-info", "info": "文件拓展名错误！看看你传的什么图片~~"})
                 image_url = save_file(image)
             except KeyError:
                 image_url = None
@@ -68,7 +68,7 @@ def post_info(request, info_type="lost"):
             #return HttpResponse(json.dumps(response_json))
             return HttpResponseRedirect("/lost_and_found/info/" + str(info.id))
         else:
-            return render(request, "message.html", {"action": "alert alert-info", "info": "表单数据错误！请检查填写！"})
+            return render(request, "message.html", {"action": "alert alert-info", "info": "表单数据错误！看看格式还有必填的~~"})
     else:
         if info_type == "lost":
             return render(request, "LostAndFound/post_info_form.html", {"item_type": ITEM_TYPE_CHOICE,
@@ -97,7 +97,7 @@ def get_contact(request, info_id):
     _code = request.POST.get('verify_code', " ")
     ca = Captcha(request)
     if not ca.check(_code):
-        response_json = {"status": "error", "content": "验证码错误"}
+        response_json = {"status": "error", "content": "验证码错误啦~"}
         return HttpResponse(json.dumps(response_json))
     else:
         response_str = u""
@@ -130,7 +130,7 @@ def post_comment(request, info_id):
             response_json = {"status": "success"}
             return HttpResponse(json.dumps(response_json))
         else:
-            response_json = {"status": "error", "content": "内容为空，请重新填写！"}
+            response_json = {"status": "error", "content": "内容为空，你发布啥啊~~！"}
             return HttpResponse(json.dumps(response_json))
     else:
         return HttpResponseRedirect("/lost_and_found/info/" + info_id)

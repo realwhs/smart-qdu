@@ -23,7 +23,7 @@ def register(request):
             user_name = form.cleaned_data["user_name"]
             password1 = form.cleaned_data["password1"]
             if len(user_name) >= 7:
-                response_json = {"status": "error", "content": "用户名最长为7个字符！"}
+                response_json = {"status": "error", "content": "用户名最长为7个字符哦~"}
                 return HttpResponse(json.dumps(response_json))
             #password2 = form.cleaned_data["password2"]
             #注意  这个地方是简化注册步骤  只输入一个密码即可  兼容以前的设计
@@ -49,12 +49,12 @@ def register(request):
                     else:
                         response_json = {"status": "error", "content": "密码不匹配！"}
                         return HttpResponse(json.dumps(response_json))
-                response_json = {"status": "error", "content": "email已经存在"}
+                response_json = {"status": "error", "content": "email已经存在啊"}
                 return HttpResponse(json.dumps(response_json))
-            response_json = {"status": "error", "content": "用户名已经存在！"}
+            response_json = {"status": "error", "content": "用户名已经存在啊~"}
             return HttpResponse(json.dumps(response_json))
         else:
-            response_json = {"status": "error", "content": "表单数据错误！"}
+            response_json = {"status": "error", "content": "表单数据错误,看看你是不是有漏填的~~"}
             return HttpResponse(json.dumps(response_json))
     else:
         next = request.GET.get("next", "/")
@@ -77,9 +77,9 @@ def log_in(request):
                 response_json = {"status": "success", "redirect": next}
                 return HttpResponse(json.dumps(response_json))
             else:
-                response_json = {"status": "error", "content": "用户名或密码错误"}
+                response_json = {"status": "error", "content": "哎，用户名或密码错误，仔细看看~"}
                 return HttpResponse(json.dumps(response_json))
-        response_json = {"status": "error", "content": "表单数据错误"}
+        response_json = {"status": "error", "content": "表单数据错误，看看你是不是全填上了~~"}
         return HttpResponse(json.dumps(response_json))
     else:
         next = request.GET.get("next", "/")
@@ -108,13 +108,13 @@ def change_password(request):
                     auth.logout(request)
                     return HttpResponseRedirect("/login/")
                 else:
-                    response_json = {"status": "error", "content": "old password error"}
+                    response_json = {"status": "error", "content": "老密码是错误的~~"}
                 return HttpResponse(json.dumps(response_json))
             else:
-                response_json = {"status": "error", "content": "passwords not matching"}
+                response_json = {"status": "error", "content": "两个密码不一样啊~"}
                 return HttpResponse(json.dumps(response_json))
         else:
-            response_json = {"status": "error", "content": "form data error"}
+            response_json = {"status": "error", "content": "表单数据错误，看看你是不是全填上了~"}
             return HttpResponse(json.dumps(response_json))
     else:
         return render(request, "Account/change_password.html")

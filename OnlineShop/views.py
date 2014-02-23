@@ -22,7 +22,7 @@ def create_order(request, item_id):
         if form.is_valid():
             number = form.cleaned_data["number"]
             if number > item.store_num or number <= 0:
-                return render(request, "message.html", {"action": "alert alert-info", "info": "购买数量错误"})
+                return render(request, "message.html", {"action": "alert alert-info", "info": "购买数量错误，你真有才~"})
             history_order = Order.objects.filter(user_name=request.user.user_name).order_by("-create_time")
             name = phone = address = ""
             if len(history_order):
@@ -36,7 +36,7 @@ def create_order(request, item_id):
                                                                      "phone":phone,
                                                                      "address": address})
         else:
-            return render(request, "message.html", {"action": "alert alert-info", "info": "请填写数量"})
+            return render(request, "message.html", {"action": "alert alert-info", "info": "请填写数量，要不买多少件啊~"})
 
     else:
         return HttpResponseRedirect("/online_shop/item/%s/" % item_id)
@@ -44,7 +44,7 @@ def create_order(request, item_id):
 
 def submit_order(request, item_id, number):
     if not request.user.is_authenticated():
-        response_json = {"status": "error", "content": "请先登录！"}
+        response_json = {"status": "error", "content": "请先登录啊！"}
         return HttpResponse(json.dumps(response_json))
     if request.method == "POST":
         try:
@@ -54,7 +54,7 @@ def submit_order(request, item_id, number):
         form = OrderForm(request.POST)
         if form.is_valid():
             if int(number) > item.store_num or int(number) < 0:
-                response_json = {"status": "error", "content": "购买数量错误！"}
+                response_json = {"status": "error", "content": "购买数量错误！你要买多少~"}
                 return HttpResponse(json.dumps(response_json))
             name = form.cleaned_data["name"]
             phone = form.cleaned_data["phone"]
@@ -64,7 +64,7 @@ def submit_order(request, item_id, number):
             #TO DO:
             #严格的验证手机号码和email
             if len(phone) != 11:
-                response_json = {"status": "error", "content": "手机号码长度错误"}
+                response_json = {"status": "error", "content": "手机号码长度错误,自己的号码都弄错~"}
                 return HttpResponse(json.dumps(response_json))
             address_info = AddressInfo.objects.create(name=name, phone=phone, email=email, address=address)
             order = Order.objects.create(item_id=item_id, number=number, total_price=int(number) * item.price,
@@ -87,7 +87,7 @@ def submit_order(request, item_id, number):
             response_json = {"status": "success", "redirect": "/online_shop/order/success/"}
             return HttpResponse(json.dumps(response_json))
         else:
-            response_json = {"status": "error", "content": "表单数据错误，请检查所有填写项目！"}
+            response_json = {"status": "error", "content": "表单数据错误，看看是不是都填上了~~！"}
             return HttpResponse(json.dumps(response_json))
     else:
         raise Http404
@@ -95,7 +95,7 @@ def submit_order(request, item_id, number):
 
 def submit_order_success(request):
     return render(request, "message.html", {"action": "alert alert-info",
-                                            "info": "提交订单成功，请等待处理！您可以到个人资料页查看。"})
+                                            "info": "亲爱的~~提交订单成功，请等待处理！您可以到个人资料页查看的。"})
 
 
 def item_page(request, item_id):

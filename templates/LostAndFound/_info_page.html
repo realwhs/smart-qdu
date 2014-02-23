@@ -17,7 +17,7 @@
                 <br/><br/><img src="{{ info.image_url }}" class="img-responsive" alt="Responsive image">
             {% endif %}<br/><br/>
             丢失人姓名：{{ info.name }}<br/><br/>
-            联系方式：<span id="contact"></span>
+            联系方式：<span id="contact"></span><br/>
 
             <form class="form-inline"  id="get_contact_form" method="POST" action="/lost_and_found/info/{{ info_id }}/get_contact/">{% csrf_token %}
                 <img src='/get_verify_code/'>
@@ -26,7 +26,15 @@
             </div>
             <button type="submit" class="btn btn-default" id="get_contact_submit">提交</button>
 
-                </form><br/><br/>
+                </form><br/>分享一下，让小伙伴们一起帮你！
+            <div class="bdsharebuttonbox" data-tag="share_1">
+
+	<a class="bds_qzone" data-cmd="qzone" href="#"></a>
+	<a class="bds_renren" data-cmd="renren"></a>
+	<a class="bds_tsina" data-cmd="tsina"></a>
+	<a class="bds_tqq" data-cmd="tqq"></a>
+	<a class="bds_weixin" data-cmd="weixin"></a>
+</div>
             {% for item in comment reversed %}
             <div class="panel panel-info">
                 <div class="panel-heading"><a href="/mail/send_mail/?to_user={{ item.author }}"><code>{{ item.author }}</code></a> published at <em>{{ item.publish_time|date:"Y年m月d日 H时i分" }}</em>
@@ -67,7 +75,7 @@
                 <br/><br/><img src="{{ info.image_url }}" class="img-responsive" alt="Responsive image">
             {% endif %}<br/><br/>
             拾获人姓名：{{ info.name }}<br/><br/>
-            联系方式：<span id="contact">请输入验证码！</span>
+            联系方式：<span id="contact">请输入验证码！</span><br/>
             <form class="form-inline"  id="get_contact_form" method="POST" action="/lost_and_found/info/{{ info_id }}/get_contact/">{% csrf_token %}
                 <img src='/get_verify_code/'>
         <div class="form-group">
@@ -75,7 +83,15 @@
             </div>
             <button type="submit" class="btn btn-default" id="get_contact_submit">提交</button>
 
-                </form><br/><br/>
+                </form><br/>分享一下，让小伙伴们一起帮你！
+            <div class="bdsharebuttonbox" data-tag="share_1">
+
+	<a class="bds_qzone" data-cmd="qzone" href="#"></a>
+	<a class="bds_renren" data-cmd="renren"></a>
+	<a class="bds_tsina" data-cmd="tsina"></a>
+	<a class="bds_tqq" data-cmd="tqq"></a>
+	<a class="bds_weixin" data-cmd="weixin"></a>
+</div>
 
             {% for item in comment reversed %}
             <div class="panel panel-info">
@@ -102,4 +118,16 @@
     </div>
     {% endifequal %}
 </div>
+<script>
+	window._bd_share_config = {
+		common : {
+			bdText : 'SmartQdu - 提供校园文化产品，自习室查询，觅物，选修课评价等校园服务。',
+
+		},
+		share : [{
+			"bdSize" : 32
+		}],
+	}
+	with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
 

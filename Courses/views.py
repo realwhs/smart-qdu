@@ -53,11 +53,11 @@ def post_comment(request, course_id):
         is_anonymous = request.POST.get("is_anonymous", False)
         score = request.POST.get("score", 6)
         if score == 6:
-            response_json = {"status": "error", "content": "请不要忘了评分"}
+            response_json = {"status": "error", "content": "请不要忘了评分啊"}
             return HttpResponse(json.dumps(response_json))
         content = request.POST.get("comment", "")
         if len(content) < 5:
-            response_json = {"status": "error", "content": "评论过短！"}
+            response_json = {"status": "error", "content": "你写这么几个字给谁看啊，多写点呗~~"}
             return HttpResponse(json.dumps(response_json))
         comment = Comment.objects.create(user_name=request.user.user_name, is_anonymous=is_anonymous,
                                          score=score, content=content)
@@ -72,7 +72,7 @@ def search(request):
     if request.method == "POST":
         key_word = request.POST.get("key_word", "")
         if len(key_word) == 0:
-            return render(request, "message.html", {"action": "alert alert-info", "info": "关键词长度为零！"})
+            return render(request, "message.html", {"action": "alert alert-info", "info": "你不输关键词搜啥啊~~"})
         info = CourseInfo.objects.all()
         tmp_list = []
         for item in info:

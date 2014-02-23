@@ -22,13 +22,13 @@ def send_mail(request):
             try:
                 Passport.objects.get(user_name=to_user)
             except Passport.DoesNotExist:
-                response_json = {"status": "error", "content": "收件人账号不存在！"}
+                response_json = {"status": "error", "content": "收件人账号不存在啊，这个发给谁呢~~"}
                 return HttpResponse(json.dumps(response_json))
             Mail.objects.create(to_user=to_user, from_user=request.user.user_name, subject=subject, content=content)
             response_json = {"status": "success", "redirect": "/mail/"}
             return HttpResponse(json.dumps(response_json))
         else:
-            response_json = {"status": "error", "content": "表单数据错误！"}
+            response_json = {"status": "error", "content": "表单数据错误，看看你是不是全填上了~"}
             return HttpResponse(json.dumps(response_json))
     else:
         raise Http404
